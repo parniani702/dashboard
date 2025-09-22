@@ -13,12 +13,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { User } from "@/generated/prisma";
+;
 import { LoaderCircle, Save } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
 
-const UpdateUserForm = ({user}: {user: User}) => {
+const UpdateUserForm = ({users}: {users: User}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [ role, setRole ] = useState("user")
 
@@ -41,10 +42,10 @@ const UpdateUserForm = ({user}: {user: User}) => {
       >
         <div className="space-y-2">
           <Label>نام و نام خانوادگی</Label>
-          <Input name="name" placeholder="نام و نام خانوادگی را وارد کنید" />
+          <Input defaultValue={users.name} name="name" placeholder="نام و نام خانوادگی را وارد کنید" />
           {/* hiden inputs */}
           <input type="hidden" value={role} name="role" />
-          <input type="hidden" value={user.id} name="id" />
+          <input type="hidden" value={users.id} name="id" />
         </div>
         <div className="space-y-2">
           <Label>نقش کاربر</Label>

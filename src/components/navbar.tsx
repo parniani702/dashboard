@@ -29,12 +29,10 @@ const Navbar = () => {
           <div className="flex items-center gap-3">
             {isPending ? (
               ""
-            ) : session ? (
+            ) : (
               <div className="xl:hidden">
                 <MobileSideBar />
               </div>
-            ) : (
-              ""
             )}
             {/* Notifications */}
             <Button variant="outline" size="icon">

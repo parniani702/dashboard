@@ -57,11 +57,11 @@ export const UpdateUserS = async (formdata: FormData) => {
 }
 
 // ! delete user
-export const DeleteUserS = async (user: User) => {
+export const DeleteUserS = async (usersId: string) => {
     try {
         await prisma.user.delete({
             where: {
-                id: user.id
+                id: usersId
             }
         })
         return {

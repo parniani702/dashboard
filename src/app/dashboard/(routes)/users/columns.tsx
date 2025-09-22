@@ -4,15 +4,10 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import UserActions from "./_components/UserActions";
+import { User } from "@/generated/prisma";
 
-export type Users = {
-  id: string;
-  email: string;
-  fullname: string;
-  role: string;
-};
 
-export const columns: ColumnDef<Users>[] = [
+export const columns: ColumnDef<User>[] = [
   // users table for showing users list columns
   {
     accessorKey: "id",
@@ -37,10 +32,10 @@ export const columns: ColumnDef<Users>[] = [
   },
 
   {
-    accessorKey: "fullname",
+    accessorKey: "name",
     header: "نام نام خانوادگی",
     cell: ({ row }) => (
-      <span className="capitalize">{row.getValue("fullname")}</span>
+      <span className="capitalize">{row.getValue("name")}</span>
     ),
   },
 

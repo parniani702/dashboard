@@ -36,7 +36,7 @@ const RegisterForm = () => {
           <h1 className="text-3xl font-bold text-center">ثبت نام حساب کاربری</h1>
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-1">
-              <Label htmlFor="name">نام</Label>
+              <Label htmlFor="name">نام و نام خانوادگی</Label>
               <Input
                 type="text"
                 id="name"
