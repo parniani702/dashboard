@@ -1,7 +1,7 @@
 "use server";
 
-import { prisma } from '@/lib/prisma'
-import { string, User } from 'better-auth';
+
+import prisma from '@/lib/prisma';
 import { z } from 'zod'
 
 // todo get all user

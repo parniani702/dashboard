@@ -43,15 +43,15 @@ const Navbar = () => {
             <ModeToggle />
 
             {/* Separator */}
-            <div className="w-px h-8 bg-gray-300 sm:mx-5" />
+            <div className="w-px h-8 bg-gray-300 hidden sm:flex sm:mx-5" />
 
             {/* User Info */}
             <div className="flex items-center gap-2 text-xs sm:text-sm font-medium">
-              خوش آمدید
               {isPending ? (
                 <Skeleton className="h-8 w-22 rounded-md" />
-              ) : session ? (
-                <span className="bg-blue-600 text-white px-3 py-1 rounded">
+                ) : session ? (
+                  <span className="bg-blue-600 text-white px-3 py-1 rounded">
+                  خوش آمدید
                   {session.user.name}
                 </span>
               ) : null}

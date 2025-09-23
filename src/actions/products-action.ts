@@ -1,7 +1,8 @@
 "use server";
 
+import prisma from "@/lib/prisma";
 import { z } from "zod";
-import { prisma } from '@/lib/prisma'
+
 
 // todo take all oproducts
 export const getProducts = async () => {

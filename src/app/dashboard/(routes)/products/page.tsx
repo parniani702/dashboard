@@ -2,7 +2,8 @@
 import { Product } from "@/generated/prisma";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
-import { prisma } from '@/lib/prisma'
+import prisma from "@/lib/prisma";
+
 
 
 export default async function DataTableDemo() {
