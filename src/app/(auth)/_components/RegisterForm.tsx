@@ -33,7 +33,7 @@ const RegisterForm = () => {
     <div className="flex items-center justify-center h-[80vh]">
       <Card className="w-full max-w-md shadow-xl bg-base-100">
         <CardContent className="gap-6">
-          <h1 className="text-3xl font-bold text-center">ثبت نام حساب کاربری</h1>
+          <h1 className="text-3xl font-bold text-center my-6">ثبت نام حساب کاربری</h1>
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-1">
               <Label htmlFor="name">نام و نام خانوادگی</Label>
