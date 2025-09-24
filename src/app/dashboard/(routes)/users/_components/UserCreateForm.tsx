@@ -27,6 +27,7 @@ const UserCreateForm = () => {
                             if(res?.success) {
                                 toast.success(res.message)
                                 setIsLoading(false)
+                                location.reload()
                             } else {
                                 toast.error(res?.message)
                                 setIsLoading(false)

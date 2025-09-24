@@ -1,15 +1,17 @@
 "use server";
 
-import prisma from "@/lib/prisma";
+
+import { eq } from "drizzle-orm";
 import { z } from "zod";
+import { products } from "../../db/schema";
+import { db } from "../../db";
 
-
-// todo take all oproducts
+// get all products
 export const getProducts = async () => {
-  return await prisma.product.findMany();
+  return await db.select().from(products);
 };
 
-// todo update product
+// update product
 export const UpdateProductS = async (formdata: FormData) => {
   try {
     const ProductSchema = z.object({
@@ -25,9 +27,9 @@ export const UpdateProductS = async (formdata: FormData) => {
     });
 
     const data = {
-      id: formdata.get("id") as string,
-      title: formdata.get("title") as string,
-      description: formdata.get("description") as string,
+      id: formdata.get("id"),
+      title: formdata.get("title"),
+      description: formdata.get("description"),
       price: Number(formdata.get("price")),
       stock: Number(formdata.get("stock")),
       sold: Number(formdata.get("sold")),
@@ -42,22 +44,21 @@ export const UpdateProductS = async (formdata: FormData) => {
       };
     }
 
-    await prisma.product.update({
-      where: { id: parsed.data.id },
-      data: {
+    await db.update(products)
+      .set({
         title: parsed.data.title,
         description: parsed.data.description,
         price: parsed.data.price,
         stock: parsed.data.stock,
         sold: parsed.data.sold,
-      },
-    });
+      })
+      .where(eq(products.id, parsed.data.id));
 
     return {
       success: true,
       message: "محصول با موفقیت بروزرسانی شد",
     };
-  } catch (err) {
+  } catch {
     return {
       success: false,
       message: "مشکلی در بروز رسانی محصول پیش آمد",
@@ -65,18 +66,15 @@ export const UpdateProductS = async (formdata: FormData) => {
   }
 };
 
-// todo delete product
+// delete product
 export const DeleteProductS = async (productId: string) => {
   try {
-    await prisma.product.delete({
-      where: { id: productId },
-    });
-
+    await db.delete(products).where(eq(products.id, productId));
     return {
       success: true,
       message: "محصول با موفقیت حذف شد",
     };
-  } catch (err) {
+  } catch {
     return {
       success: false,
       message: "مشکلی در حذف محصول پیش آمد",
@@ -84,7 +82,7 @@ export const DeleteProductS = async (productId: string) => {
   }
 };
 
-//  todo create product
+// create product
 export const CreateProductS = async (formdata: FormData) => {
   try {
     const ProductSchema = z.object({
@@ -112,21 +110,19 @@ export const CreateProductS = async (formdata: FormData) => {
       };
     }
 
-    await prisma.product.create({
-      data: {
-        title: parsed.data.title,
-        description: parsed.data.description,
-        price: parsed.data.price,
-        stock: parsed.data.stock,
-        sold: 0,
-      },
+    await db.insert(products).values({
+      title: parsed.data.title,
+      description: parsed.data.description,
+      price: parsed.data.price,
+      stock: parsed.data.stock,
+      sold: 0,
     });
 
     return {
       success: true,
       message: "محصول با موفقیت ساخته شد",
     };
-  } catch (err) {
+  } catch {
     return {
       success: false,
       message: "مشکلی در ساخت محصول پیش آمد",

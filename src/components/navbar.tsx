@@ -51,7 +51,7 @@ const Navbar = () => {
                 <Skeleton className="h-8 w-22 rounded-md" />
                 ) : session ? (
                   <span className="bg-blue-600 text-white px-3 py-1 rounded">
-                  خوش آمدید
+                  <span className="mx-2">خوش آمدید</span>
                   {session.user.name}
                 </span>
               ) : null}

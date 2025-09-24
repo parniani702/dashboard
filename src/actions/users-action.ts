@@ -1,77 +1,74 @@
 "use server";
 
 
-import prisma from '@/lib/prisma';
-import { z } from 'zod'
+import { eq } from "drizzle-orm";
+import { z } from "zod";
+import { user } from "../../db/schema";
+import { db } from "../../db";
 
-// todo get all user
-export const getUsers = async () => {
-    const users = await prisma.user.findMany()
-    return users
-}
+// get all user
+export const getuser = async () => {
+  return await db.select().from(user);
+};
 
-
-// todo update user
+// update user
 export const UpdateUserS = async (formdata: FormData) => {
-    try {
-        const userSchema = z.object({
-            id: z.string(),
-            name: z.string().min(1, "فیلد نام و نام خانوادگی خالی است").max(60, 'نام شما خیلی بلند است لطفا یک نام کوتاه تر انتخاب کنید'),
-            role: z.enum(["user", "admin"])
-        })
-        const data = {
-            id: formdata.get("id"),
-            name: formdata.get("name"),
-            role: formdata.get("role")
-        }
-        const parsed = userSchema.safeParse(data)
+  try {
+    const userchema = z.object({
+      id: z.string(),
+      name: z
+        .string()
+        .min(1, "فیلد نام و نام خانوادگی خالی است")
+        .max(60, "نام شما خیلی بلند است لطفا یک نام کوتاه تر انتخاب کنید"),
+      role: z.enum(["user", "admin"]),
+    });
 
-        if(!parsed.success) {
-            return {
-                success: false,
-                message: parsed.error.issues.map(iss => iss.message).join(" ,")
-            }
-        }
+    const data = {
+      id: formdata.get("id"),
+      name: formdata.get("name"),
+      role: formdata.get("role"),
+    };
 
-        await prisma.user.update({
-            where: {
-                id: parsed.data?.id
-            },
-            data: {
-                name: parsed.data?.name,
-                role: parsed.data?.role
-            }
-        })
+    const parsed = userchema.safeParse(data);
 
-        return {
-            success: true,
-            message: 'اطلاعات با موفقیت ویرایش شد'
-        }
-
-    } catch(err) {
-        return {
-            success: false,
-            message: 'مشکلی در بروزرسانی کاربر پیش امده'
-        }
+    if (!parsed.success) {
+      return {
+        success: false,
+        message: parsed.error.issues.map((iss) => iss.message).join(" ,"),
+      };
     }
-}
 
-// ! delete user
-export const DeleteUserS = async (usersId: string) => {
-    try {
-        await prisma.user.delete({
-            where: {
-                id: usersId
-            }
-        })
-        return {
-            success: true,
-            message: "کاربر با موفقیت حذف شد"
-        }
+    await db
+      .update(user)
+      .set({
+        name: parsed.data.name,
+        role: parsed.data.role,
+      })
+      .where(eq(user.id, parsed.data.id));
 
-    } catch (err) {
-        return {
-            success: false
-        }
-    }
-}
+    return {
+      success: true,
+      message: "اطلاعات با موفقیت ویرایش شد",
+    };
+  } catch {
+    return {
+      success: false,
+      message: "مشکلی در بروزرسانی کاربر پیش امده",
+    };
+  }
+};
+
+// delete user
+export const DeleteUserS = async (userId: string) => {
+  try {
+    await db.delete(user).where(eq(user.id, userId));
+    return {
+      success: true,
+      message: "کاربر با موفقیت حذف شد",
+    };
+  } catch {
+    return {
+      success: false,
+    };
+  }
+};
