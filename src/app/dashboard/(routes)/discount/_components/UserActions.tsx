@@ -19,18 +19,17 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import UpdateUserForm from "./UpdateUserForm";
+import { DeleteUserS } from "@/actions/users-action";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import UpdateProductForm from "./UpdateProductForm";
-import { DeleteProductS } from "@/actions/products-action";
-import { Products } from "@/types";
+import { Discounts } from "@/types";
 
 
 
-const ProductActions = ({ products }: { products: Products  }) => {
-
+const UserActions = ({ discounts }: { discounts: Discounts  }) => {
   const [isLoading, setIsLoading] = useState(false)
-  
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -39,9 +38,9 @@ const ProductActions = ({ products }: { products: Products  }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(products.title)}>
+        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(discounts.code)}>
           <Button variant="ghost" className="w-full">
-            کپی کردن نام محصول
+            کپی کردن کد تخفیف
             <Copy />
           </Button>
         </DropdownMenuItem>
@@ -54,7 +53,7 @@ const ProductActions = ({ products }: { products: Products  }) => {
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
-              <AlertDialogTitle>حذف محصول</AlertDialogTitle>
+              <AlertDialogTitle>حذف کاربر</AlertDialogTitle>
               <AlertDialogDescription>آیا مطمئن هستید؟</AlertDialogDescription>
               <div className="flex justify-end gap-2 mt-4">
                 <AlertDialogCancel>بستن</AlertDialogCancel>
@@ -62,7 +61,7 @@ const ProductActions = ({ products }: { products: Products  }) => {
                   <Button
                     onClick={async () => {
                       setIsLoading(true)
-                      const res = await DeleteProductS(products.id)
+                      const res = await DeleteUserS(discounts.id)
                       if (res.success) {
                         toast.success(res.message)
                         setIsLoading(false)
@@ -74,7 +73,7 @@ const ProductActions = ({ products }: { products: Products  }) => {
                     }}
                     variant="destructive"
                   >
-                    {isLoading ? <LoaderCircle className="animate-spin" /> : "حذف محصول"}
+                    {isLoading ? <LoaderCircle className="animate-spin" /> : "حذف کاربر"}
                   </Button>
                 </AlertDialogAction>
               </div>
@@ -89,11 +88,11 @@ const ProductActions = ({ products }: { products: Products  }) => {
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
-              <AlertDialogTitle>ویرایش محصول</AlertDialogTitle>
+              <AlertDialogTitle>ویرایش کاربر</AlertDialogTitle>
               <AlertDialogDescription>
                 لطفا تمامی اطلاعات را با دقت وارد کنید
               </AlertDialogDescription>
-              <UpdateProductForm products={products} />
+              <UpdateUserForm discounts={discounts} />
               <div className="flex justify-end mt-4">
                 <AlertDialogAction asChild>
                   <Button className="w-full">بستن</Button>
@@ -107,4 +106,4 @@ const ProductActions = ({ products }: { products: Products  }) => {
   )
 }
 
-export default ProductActions;
+export default UserActions;

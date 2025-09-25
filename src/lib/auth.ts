@@ -1,15 +1,14 @@
 
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { db } from "../db";
+import { schemaAuth } from "../db/schema";
+import { admin } from 'better-auth/plugins'
 import { nextCookies } from "better-auth/next-js";
-import { db } from "../../db";
-import { schemaAuth } from "../../db/schema";
-
-
 
 export const auth = betterAuth({
     database: drizzleAdapter(db, {
-        provider: "pg", // or "mysql", "sqlite",
+        provider: "pg",
         schema: schemaAuth
     }),
     emailAndPassword: {
@@ -20,7 +19,14 @@ export const auth = betterAuth({
             enabled: true,
         }
     },
+    advanced: {
+        useSecureCookies: true,
+    },
+    trustedOrigins: [
+        'https://dashboard-rosy-phi-49.vercel.app',
+    ],
     plugins: [
-        nextCookies()
+        nextCookies(),
+        admin({defaultRole: 'user'})
     ]
 });

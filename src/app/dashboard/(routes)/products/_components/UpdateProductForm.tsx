@@ -4,12 +4,13 @@ import { UpdateProductS } from "@/actions/products-action";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Product } from "@/generated/prisma";
 import { LoaderCircle, Save } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { Products } from "@/types";
 
-const UpdateProductForm = ({ products }: { products: Product }) => {
+
+const UpdateProductForm = ({ products }: { products: Products }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   return (

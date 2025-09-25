@@ -1,33 +1,29 @@
 "use client";
 
 import { RegisterS } from "@/actions/better-auth";
-import { CreateProductS } from "@/actions/products-action";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { LoaderCircle, Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-const ProductCreateForm = () => {
-
+const UserCreateForm = () => {
     const [isLoading, setIsLoading] = useState(false)
-    
     return ( 
         <div>
             <Dialog>
                 <DialogTrigger>
                     <Button variant="outline">
-                        افزودن محصول
+                        ساخت کاربر
                         <Plus />
                     </Button>
                 </DialogTrigger>
                 <DialogContent>
                     <form className="flex flex-col mt-9 gap-4" action={
                         async (FormData) => {
-                            const res = await CreateProductS(FormData)
+                            const res = await RegisterS(FormData)
                             if(res?.success) {
                                 toast.success(res.message)
                                 setIsLoading(false)
@@ -38,22 +34,17 @@ const ProductCreateForm = () => {
                             }
                         }
                     }>
-                        <input type="hidden" name="sold" value={0} />
                         <div className="space-y-3">
-                            <Label>نام محصول</Label>
-                            <Input placeholder="نام محصول رو وارد کنید" type="text" name="title" />
+                            <Label>نام و نام خانوادگی</Label>
+                            <Input placeholder="" type="text" name="name" />
                         </div>
                         <div className="space-y-3">
-                            <Label>توضیحات محصول</Label>
-                            <Textarea placeholder="توضیحات محصول"  name="description" />
+                            <Label>ایمیل</Label>
+                            <Input placeholder="" type="email" name="email" />
                         </div>
                         <div className="space-y-3">
-                            <Label>قیمت محصول</Label>
-                            <Input placeholder="قیمت محصول" type="number" name="price" />
-                        </div>
-                        <div className="space-y-3">
-                            <Label>تعداد محصول</Label>
-                            <Input placeholder="تعداد محصول رو وارد کنید" type="number" name="stock" />
+                            <Label>پسورد</Label>
+                            <Input placeholder="" type="password" name="password" />
                         </div>
                         <Button onClick={() => setIsLoading(true)} type="submit">
                             {
@@ -67,4 +58,4 @@ const ProductCreateForm = () => {
      );
 }
  
-export default ProductCreateForm;
+export default UserCreateForm;

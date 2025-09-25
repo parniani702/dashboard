@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Button } from "@/components/ui/button";
-import { Copy, Edit, LoaderCircle, MoreHorizontal, Trash } from "lucide-react";
+import { Copy, LoaderCircle, MoreHorizontal, Send, Trash } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,16 +21,14 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import UpdateProductForm from "./UpdateProductForm";
-import { DeleteProductS } from "@/actions/products-action";
-import { Product } from "@/generated/prisma";
+import { Tickets } from "@/types";
+import { DeleteTicketS } from "@/actions/tickets-action";
+import AnswerTicket from "./AnswerTicket";
 
 
-
-const ProductActions = ({ products }: { products: Product  }) => {
-
+const UserActions = ({ tickets }: { tickets: Tickets  }) => {
   const [isLoading, setIsLoading] = useState(false)
-  
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -39,9 +37,9 @@ const ProductActions = ({ products }: { products: Product  }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(products.title)}>
+        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(tickets.message)}>
           <Button variant="ghost" className="w-full">
-            کپی کردن نام محصول
+            کپی کردن پیغام
             <Copy />
           </Button>
         </DropdownMenuItem>
@@ -54,7 +52,7 @@ const ProductActions = ({ products }: { products: Product  }) => {
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
-              <AlertDialogTitle>حذف محصول</AlertDialogTitle>
+              <AlertDialogTitle>حذف تیکت</AlertDialogTitle>
               <AlertDialogDescription>آیا مطمئن هستید؟</AlertDialogDescription>
               <div className="flex justify-end gap-2 mt-4">
                 <AlertDialogCancel>بستن</AlertDialogCancel>
@@ -62,19 +60,19 @@ const ProductActions = ({ products }: { products: Product  }) => {
                   <Button
                     onClick={async () => {
                       setIsLoading(true)
-                      const res = await DeleteProductS(products.id)
-                      if (res.success) {
+                      const res = await DeleteTicketS( tickets.id)
+                      if (res?.message) {
                         toast.success(res.message)
                         setIsLoading(false)
                         location.reload()
                       } else {
-                        toast.error(res.message)
+                        toast.error(res?.message)
                         setIsLoading(false)
                       }
                     }}
                     variant="destructive"
                   >
-                    {isLoading ? <LoaderCircle className="animate-spin" /> : "حذف محصول"}
+                    {isLoading ? <LoaderCircle className="animate-spin" /> : "حذف تیکت"}
                   </Button>
                 </AlertDialogAction>
               </div>
@@ -85,15 +83,16 @@ const ProductActions = ({ products }: { products: Product  }) => {
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button variant="ghost" className="w-full">
-                ویرایش <Edit />
+                پاسخ به تیکت 
+                <Send />
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
-              <AlertDialogTitle>ویرایش محصول</AlertDialogTitle>
+              <AlertDialogTitle>پاسخ به تیکت</AlertDialogTitle>
               <AlertDialogDescription>
-                لطفا تمامی اطلاعات را با دقت وارد کنید
+                لطفا متن را با دقت وارد کنید که امکان بازگشت وجود ندارد
               </AlertDialogDescription>
-              <UpdateProductForm products={products} />
+              <AnswerTicket tickets={tickets} />
               <div className="flex justify-end mt-4">
                 <AlertDialogAction asChild>
                   <Button className="w-full">بستن</Button>
@@ -107,4 +106,4 @@ const ProductActions = ({ products }: { products: Product  }) => {
   )
 }
 
-export default ProductActions;
+export default UserActions;

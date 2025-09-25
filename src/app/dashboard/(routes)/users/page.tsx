@@ -1,13 +1,10 @@
-// app/dashboard/users/DataTableDemo.tsx
-import { db } from "../../../../../db";
-import { user } from "../../../../../db/schema";
+import { db } from "../../../../db";
+import { user } from "../../../../db/schema";
 
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
-import { Skeleton } from "@/components/ui/skeleton";
-import { InferSelectModel } from "drizzle-orm";
+import { User } from "@/types";
 
-type User = InferSelectModel<typeof user>;
 
 export default async function DataTableDemo() {
 
@@ -18,19 +15,17 @@ export default async function DataTableDemo() {
     email: user.email,
     name: user.name,
     role: user.role,
+    banned: user.banned,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
     image: user.image,
     emailVerified: user.emailVerified,
   }));
 
+
   return (
     <div className="p-4">
-      {usersData.length ? (
         <DataTable columns={columns} data={data} filterKey="email" />
-      ) : (
-        <Skeleton className="h-6 w-[200px]" />
-      )}
     </div>
   );
 }

@@ -32,8 +32,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import { toast } from "react-toastify";
+import { Skeleton } from "@/components/ui/skeleton";
 import ProductCreateForm from "./_components/ProductCreateForm";
-
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -53,6 +53,15 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+
+  const [showSkeleton, setShowSkeleton] = React.useState(true);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSkeleton(false);
+    }, 600);
+    return () => clearTimeout(timer);
+  }, []);
 
   const table = useReactTable({
     data,
@@ -78,7 +87,7 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center py-4 gap-2">
         {filterKey && (
           <Input
-            placeholder={`جستجو براساس نام محصول`}
+            placeholder={`جستجو براساس موضوع`}
             value={
               (table.getColumn(filterKey)?.getFilterValue() as string) ?? ""
             }
@@ -105,22 +114,28 @@ export function DataTable<TData, TValue>({
                   checked={column.getIsVisible()}
                   onCheckedChange={(value) => column.toggleVisibility(!!value)}
                 >
-                  {column.id}
+                  {typeof column.columnDef.header === 'string' ? column.columnDef.header : ''}
                 </DropdownMenuCheckboxItem>
               ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        {/* Export All Users */}
-        <Button variant="outline" onClick={() => {
-          const dataString = JSON.stringify(data)
-          navigator.clipboard.writeText(dataString)
-          toast.success("با موفقیت کپی شد")
-        }}>خروجی json</Button>
 
-        {/* Create User */}
+        <Button
+          variant="outline"
+          onClick={() => {
+            const dataString = JSON.stringify(data);
+            navigator.clipboard.writeText(dataString);
+            toast.success("با موفقیت کپی شد");
+          }}
+        >
+          خروجی json
+        </Button>
+
+        {/* Product Create */}
         <ProductCreateForm />
         
       </div>
+
       <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader>
@@ -140,7 +155,13 @@ export function DataTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {showSkeleton ? (
+              <TableRow>
+                <TableCell colSpan={columns.length}>
+                  <Skeleton className="w-full h-24" />
+                </TableCell>
+              </TableRow>
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -158,10 +179,7 @@ export function DataTable<TData, TValue>({
               ))
             ) : (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
+                <TableCell colSpan={columns.length} className="h-24 text-center">
                   هیچ نتیجه‌ای یافت نشد.
                 </TableCell>
               </TableRow>

@@ -3,8 +3,8 @@
 
 import { eq } from "drizzle-orm";
 import { z } from "zod";
-import { products } from "../../db/schema";
-import { db } from "../../db";
+import { products } from "../db/schema";
+import { db } from "../db";
 
 // get all products
 export const getProducts = async () => {

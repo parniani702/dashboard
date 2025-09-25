@@ -5,21 +5,19 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 
 import ProductActions from "./_components/ProductActions";
-import { Product } from "@/generated/prisma";
+import { Products } from "@/types";
 
 
-
-
-export const columns: ColumnDef<Product>[] = [
+export const columns: ColumnDef<Products>[] = [
   // users table for showing users list columns
   {
-    accessorKey: "id",
+    accessorKey: "ایدی",
     header: "ایدی",
     cell: ({ row }) => <span className="capitalize">{row.getValue("id")}</span>,
   },
   
   {
-    accessorKey: "title",
+    accessorKey: "اسم محصول",
     header: ({ column }) => (
       <Button
         variant="ghost"
@@ -36,7 +34,7 @@ export const columns: ColumnDef<Product>[] = [
   },
 
   {
-    accessorKey: "description",
+    accessorKey: "توضیحات",
     header: "توضیحات",
     cell: ({ row }) => (
       <span className="capitalize">{row.getValue("description")}</span>
@@ -44,21 +42,21 @@ export const columns: ColumnDef<Product>[] = [
   },
 
   {
-    accessorKey: "price",
+    accessorKey: "قیمت",
     header: "قیمت",
     cell: ({ row }) => (
       <span className="capitalize">{row.getValue("price")}</span>
     ),
   },
   {
-    accessorKey: "stock",
+    accessorKey: "موجودی",
     header: "موجودی",
     cell: ({ row }) => (
       <span className="capitalize">{row.getValue("stock")}</span>
     ),
   },
   {
-    accessorKey: "sold",
+    accessorKey: "فروخته شده",
     header: "فروخته شده",
     cell: ({ row }) => (
       <span className="capitalize">{row.getValue("sold")}</span>
@@ -68,7 +66,7 @@ export const columns: ColumnDef<Product>[] = [
 
   // user actions for edit delete
   {
-    id: "actions",
+    id: "عملیات",
     header: "عملیات",
     cell: ({ row }) => {
       const products = row.original;

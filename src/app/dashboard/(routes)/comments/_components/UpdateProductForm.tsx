@@ -1,15 +1,16 @@
 "use client";
 
-import { UpdateProductS } from "@/actions/products-action";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Product } from "@/generated/prisma";
 import { LoaderCircle, Save } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { Textarea } from "@/components/ui/textarea";
+import { UpdateComment } from "@/actions/comments-action";
+import { Comments } from "@/types";
 
-const UpdateProductForm = ({ products }: { products: Product }) => {
+
+const UpdateProductForm = ({ comments }: { comments: Comments }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   return (
@@ -17,9 +18,9 @@ const UpdateProductForm = ({ products }: { products: Product }) => {
       <form
         className="flex flex-col gap-4"
         action={async (FormData) => {
-          const res = await UpdateProductS(FormData);
+          const res = await UpdateComment(FormData);
           if (res?.success) {
-            toast.success("کاربر با موفقیت اپدیت شد");
+            toast.success("کامنت ویرایش شد");
             setIsLoading(false);
             location.reload();
           } else {
@@ -29,36 +30,13 @@ const UpdateProductForm = ({ products }: { products: Product }) => {
         }}
       >
         {/* hiden inputs */}
-        <input type="hidden" value={products.id} name="id" />
-        <input type="hidden" value={products.sold} name="sold" />
+        <input type="hidden" value={comments.id} name="id" />
         <div className="space-y-2">
-          <Label>نام محصول</Label>
-          <Input
-            defaultValue={products.title}
-            name="title"
-            placeholder="نام محصول رو وارد کن"
-          />
-        </div>
-        <div className="space-y-2">
-          <Label>توضیحات محصول</Label>
-          <Input name="description" placeholder="توضیحات محصول رو وارد کن" />
-        </div>
-        <div className="space-y-2">
-          <Label>قیمت محصول به تومان</Label>
-          <Input
-            defaultValue={0}
-            type="number"
-            name="price"
-            placeholder="قیمت محصول رو وارد کن"
-          />
-        </div>
-        <div className="space-y-2">
-          <Label>مقدار محصول</Label>
-          <Input
-            defaultValue={products.stock}
-            name="stock"
-            type="number"
-            placeholder="مقدار محصول رو وارد کن"
+          <Label>محتوای کامنت</Label>
+          <Textarea
+            defaultValue={comments.content}
+            name="content"
+            placeholder="خب محتوای کامنت رو بنویس"
           />
         </div>
         <Button

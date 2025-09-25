@@ -22,12 +22,12 @@ import {
 import { toast } from "react-toastify";
 import { useState } from "react";
 import UpdateProductForm from "./UpdateProductForm";
-import { DeleteProductS } from "@/actions/products-action";
-import { Products } from "@/types";
+import { DeleteComment } from "@/actions/comments-action";
+import { Comments } from "@/types";
 
 
 
-const ProductActions = ({ products }: { products: Products  }) => {
+const CommentActions = ({ comments }: { comments: Comments  }) => {
 
   const [isLoading, setIsLoading] = useState(false)
   
@@ -39,9 +39,21 @@ const ProductActions = ({ products }: { products: Products  }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(products.title)}>
+        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(comments.id)}>
           <Button variant="ghost" className="w-full">
-            کپی کردن نام محصول
+            کپی کردن ایدی کامنت
+            <Copy />
+          </Button>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(comments.productId)}>
+          <Button variant="ghost" className="w-full">
+            کپی کردن ایدی محصول
+            <Copy />
+          </Button>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(comments.userId)}>
+          <Button variant="ghost" className="w-full">
+            کپی کردن ایدی کاربر
             <Copy />
           </Button>
         </DropdownMenuItem>
@@ -62,19 +74,19 @@ const ProductActions = ({ products }: { products: Products  }) => {
                   <Button
                     onClick={async () => {
                       setIsLoading(true)
-                      const res = await DeleteProductS(products.id)
-                      if (res.success) {
+                      const res = await DeleteComment(comments.id)
+                      if (res?.success) {
                         toast.success(res.message)
                         setIsLoading(false)
                         location.reload()
                       } else {
-                        toast.error(res.message)
+                        toast.error(res?.message)
                         setIsLoading(false)
                       }
                     }}
                     variant="destructive"
                   >
-                    {isLoading ? <LoaderCircle className="animate-spin" /> : "حذف محصول"}
+                    {isLoading ? <LoaderCircle className="animate-spin" /> : "حذف کامنت"}
                   </Button>
                 </AlertDialogAction>
               </div>
@@ -89,11 +101,11 @@ const ProductActions = ({ products }: { products: Products  }) => {
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
-              <AlertDialogTitle>ویرایش محصول</AlertDialogTitle>
+              <AlertDialogTitle>ویرایش کامنت</AlertDialogTitle>
               <AlertDialogDescription>
                 لطفا تمامی اطلاعات را با دقت وارد کنید
               </AlertDialogDescription>
-              <UpdateProductForm products={products} />
+              <UpdateProductForm comments={comments} />
               <div className="flex justify-end mt-4">
                 <AlertDialogAction asChild>
                   <Button className="w-full">بستن</Button>
@@ -107,4 +119,4 @@ const ProductActions = ({ products }: { products: Products  }) => {
   )
 }
 
-export default ProductActions;
+export default CommentActions;

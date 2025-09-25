@@ -19,21 +19,21 @@ const Navbar = () => {
           {/* Logo  Title */}
           <Link
             href="/dashboard"
-            className="flex items-center gap-3 text-sm sm:text-lg font-semibold"
+            className="hidden xl:flex items-center gap-3 text-sm sm:text-lg font-semibold"
           >
             <Gauge className="text-blue-500" strokeWidth={3} />
             داشبورد کاربری
           </Link>
+          {isPending ? (
+            ""
+          ) : (
+            <div className="xl:hidden">
+              <MobileSideBar />
+            </div>
+          )}
 
           {/* Right Section */}
           <div className="flex items-center gap-3">
-            {isPending ? (
-              ""
-            ) : (
-              <div className="xl:hidden">
-                <MobileSideBar />
-              </div>
-            )}
             {/* Notifications */}
             <Button variant="outline" size="icon">
               <Bell />
@@ -49,8 +49,8 @@ const Navbar = () => {
             <div className="flex items-center gap-2 text-xs sm:text-sm font-medium">
               {isPending ? (
                 <Skeleton className="h-8 w-22 rounded-md" />
-                ) : session ? (
-                  <span className="bg-blue-600 text-white px-3 py-1 rounded">
+              ) : session ? (
+                <span className="bg-blue-600 text-white px-3 py-1 rounded">
                   <span className="mx-2">خوش آمدید</span>
                   {session.user.name}
                 </span>

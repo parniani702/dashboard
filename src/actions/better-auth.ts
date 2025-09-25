@@ -3,6 +3,12 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 
+// get session server
+export const sessionS = async () => {
+    return await auth.api.getSession({
+        headers: await headers()
+    })
+}
 
 //  register
 export const RegisterS = async (formdata: FormData) => {
@@ -110,6 +116,7 @@ export const ChangePassword = async (formdata: FormData) => {
     }
 }
 
+// change name
 export const ChangeName = async (formdata: FormData) => {
     const name = formdata.get("name")?.toString()
 

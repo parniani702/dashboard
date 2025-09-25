@@ -23,7 +23,8 @@ import UpdateUserForm from "./UpdateUserForm";
 import { DeleteUserS } from "@/actions/users-action";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import { User } from "@/generated/prisma";
+import { User } from "@/types";
+
 
 const UserActions = ({ users }: { users: User  }) => {
   const [isLoading, setIsLoading] = useState(false)

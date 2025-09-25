@@ -1,6 +1,6 @@
 "use client";
 
-import { Sidebar } from "lucide-react";
+import { Gauge } from "lucide-react";
 import { Drawer, DrawerTrigger, DrawerContent, DrawerClose } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -11,7 +11,7 @@ const MobileSideBar = () => {
     <Drawer direction="right">
       <DrawerTrigger asChild>
         <Button variant="outline" size="icon" className="xl:hidden">
-          <Sidebar />
+          <Gauge className="text-blue-500" strokeWidth={3} />
         </Button>
       </DrawerTrigger>
 
