@@ -9,13 +9,13 @@ import { Tickets } from "@/types";
 export const columns: ColumnDef<Tickets>[] = [
   // users table for showing users list columns
   {
-    accessorKey: "ایدی",
+    accessorKey: "id",
     header: "ایدی",
     cell: ({ row }) => <span className="capitalize">{row.getValue("id")}</span>,
   },
   
   {
-    accessorKey: "موضوع",
+    accessorKey: "title",
     header: ({ column }) => (
       <Button
         variant="ghost"
@@ -31,7 +31,7 @@ export const columns: ColumnDef<Tickets>[] = [
   },
 
   {
-    accessorKey: "پیغام",
+    accessorKey: "message",
     header: "پیغام",
     cell: ({ row }) => (
       <span className="capitalize">{row.getValue("message")}</span>
@@ -39,14 +39,14 @@ export const columns: ColumnDef<Tickets>[] = [
   },
 
   {
-    accessorKey: "ایدی فرستنده",
+    accessorKey: "userId",
     header: "ایدی فرستنده",
     cell: ({ row }) => (
       <span className="capitalize">{row.getValue("userId")}</span>
     ),
   },
   {
-    accessorKey: "وضعیت",
+    accessorKey: "status",
     header: "وضعیت",
     cell: ({ row }) => (
       <span className="capitalize">{row.getValue("status")}</span>
@@ -55,7 +55,7 @@ export const columns: ColumnDef<Tickets>[] = [
 
   // user actions for edit delete
   {
-    id: "عملیات",
+    id: "action",
     header: "عملیات",
     cell: ({ row }) => {
       const tickets = row.original;

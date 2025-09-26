@@ -11,6 +11,7 @@ import { Comments } from "@/types";
 
 
 const UpdateProductForm = ({ comments }: { comments: Comments }) => {
+  
   const [isLoading, setIsLoading] = useState(false);
 
   return (

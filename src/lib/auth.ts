@@ -12,7 +12,8 @@ export const auth = betterAuth({
         schema: schemaAuth
     }),
     emailAndPassword: {
-        enabled: true
+        enabled: true,
+        autoSignIn: false,
     },
     user: {
         deleteUser: {

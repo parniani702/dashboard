@@ -1,7 +1,6 @@
 import { Discounts } from "@/types";
 import { db } from "../../../../db";
-import { discounts, user } from "../../../../db/schema";
-
+import { discounts } from "../../../../db/schema";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 
@@ -25,7 +24,7 @@ export default async function DataTableDemo() {
 
   return (
     <div className="p-4">
-        <DataTable columns={columns} data={data} filterKey="email" />
+        <DataTable columns={columns} data={data} filterKey="code" />
     </div>
   );
 }

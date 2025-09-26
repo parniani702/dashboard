@@ -19,17 +19,19 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import UpdateUserForm from "./UpdateUserForm";
-import { DeleteUserS } from "@/actions/users-action";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { Discounts } from "@/types";
+import UpdateDiscount from "./UpdateDiscount";
+import { DeleteComment } from "@/actions/comments-action";
+import { DeleteDiscount } from "@/actions/discount-action";
 
 
 
-const UserActions = ({ discounts }: { discounts: Discounts  }) => {
+const DiscountAction = ({ discounts }: { discounts: Discounts  }) => {
+
   const [isLoading, setIsLoading] = useState(false)
-
+  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -40,10 +42,11 @@ const UserActions = ({ discounts }: { discounts: Discounts  }) => {
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => navigator.clipboard.writeText(discounts.code)}>
           <Button variant="ghost" className="w-full">
-            کپی کردن کد تخفیف
+            کپی کردن ایدی کد تخفیف
             <Copy />
           </Button>
         </DropdownMenuItem>
+
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <AlertDialog>
@@ -53,29 +56,29 @@ const UserActions = ({ discounts }: { discounts: Discounts  }) => {
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
-              <AlertDialogTitle>حذف کاربر</AlertDialogTitle>
+              <AlertDialogTitle>حذف کد تخفیف</AlertDialogTitle>
               <AlertDialogDescription>آیا مطمئن هستید؟</AlertDialogDescription>
               <div className="flex justify-end gap-2 mt-4">
                 <AlertDialogCancel>بستن</AlertDialogCancel>
-                <AlertDialogAction asChild>
+                <AlertDialogTrigger asChild>
                   <Button
                     onClick={async () => {
                       setIsLoading(true)
-                      const res = await DeleteUserS(discounts.id)
-                      if (res.success) {
+                      const res = await DeleteDiscount(discounts.id)
+                      if (res?.success) {
                         toast.success(res.message)
                         setIsLoading(false)
                         location.reload()
                       } else {
-                        toast.error(res.message)
+                        toast.error(res?.message)
                         setIsLoading(false)
                       }
                     }}
                     variant="destructive"
                   >
-                    {isLoading ? <LoaderCircle className="animate-spin" /> : "حذف کاربر"}
+                    {isLoading ? <LoaderCircle className="animate-spin" /> : "حذف کد تخفیف"}
                   </Button>
-                </AlertDialogAction>
+                </AlertDialogTrigger>
               </div>
             </AlertDialogContent>
           </AlertDialog>
@@ -88,12 +91,12 @@ const UserActions = ({ discounts }: { discounts: Discounts  }) => {
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
-              <AlertDialogTitle>ویرایش کاربر</AlertDialogTitle>
+              <AlertDialogTitle>ویرایش کد تخفیف</AlertDialogTitle>
               <AlertDialogDescription>
-                لطفا تمامی اطلاعات را با دقت وارد کنید
+                لطفا تمامی اطلاعات رو با دقت پر کنید مقادیر پیشفرض دارند 
               </AlertDialogDescription>
-              <UpdateUserForm discounts={discounts} />
-              <div className="flex justify-end mt-4">
+              <UpdateDiscount discounts={discounts} />
+              <div className="flex justify-end">
                 <AlertDialogAction asChild>
                   <Button className="w-full">بستن</Button>
                 </AlertDialogAction>
@@ -106,4 +109,4 @@ const UserActions = ({ discounts }: { discounts: Discounts  }) => {
   )
 }
 
-export default UserActions;
+export default DiscountAction;

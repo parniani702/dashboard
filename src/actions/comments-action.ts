@@ -24,7 +24,7 @@ export const UpdateComment = async (formdata: FormData) => {
             }
         }
 
-        await db.update(comments).set({content: parsed.data.content}).where(eq(comments.id, parsed.data.id))
+        await db.update(comments).set({content: parsed.data.content}).where(eq(comments.id, Number(parsed.data.id)))
 
         return {
             success: true,
@@ -41,7 +41,7 @@ export const UpdateComment = async (formdata: FormData) => {
 
 
 
-export const DeleteComment =  async (commentId: string) => {
+export const DeleteComment =  async (commentId: number) => {
     try {
 
         await db.delete(comments).where(eq(comments.id, commentId))

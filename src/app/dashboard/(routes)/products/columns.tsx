@@ -9,15 +9,14 @@ import { Products } from "@/types";
 
 
 export const columns: ColumnDef<Products>[] = [
-  // users table for showing users list columns
   {
-    accessorKey: "ایدی",
+    accessorKey: "id",
     header: "ایدی",
     cell: ({ row }) => <span className="capitalize">{row.getValue("id")}</span>,
   },
   
   {
-    accessorKey: "اسم محصول",
+    accessorKey: "title",
     header: ({ column }) => (
       <Button
         variant="ghost"
@@ -34,7 +33,7 @@ export const columns: ColumnDef<Products>[] = [
   },
 
   {
-    accessorKey: "توضیحات",
+    accessorKey: "description",
     header: "توضیحات",
     cell: ({ row }) => (
       <span className="capitalize">{row.getValue("description")}</span>
@@ -42,21 +41,21 @@ export const columns: ColumnDef<Products>[] = [
   },
 
   {
-    accessorKey: "قیمت",
+    accessorKey: "price",
     header: "قیمت",
     cell: ({ row }) => (
       <span className="capitalize">{row.getValue("price")}</span>
     ),
   },
   {
-    accessorKey: "موجودی",
+    accessorKey: "stock",
     header: "موجودی",
     cell: ({ row }) => (
       <span className="capitalize">{row.getValue("stock")}</span>
     ),
   },
   {
-    accessorKey: "فروخته شده",
+    accessorKey: "sold",
     header: "فروخته شده",
     cell: ({ row }) => (
       <span className="capitalize">{row.getValue("sold")}</span>
@@ -66,7 +65,7 @@ export const columns: ColumnDef<Products>[] = [
 
   // user actions for edit delete
   {
-    id: "عملیات",
+    id: "action",
     header: "عملیات",
     cell: ({ row }) => {
       const products = row.original;

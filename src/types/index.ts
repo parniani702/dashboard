@@ -1,12 +1,12 @@
 import { InferSelectModel } from "drizzle-orm";
-import { user, comments, tickets, discounts } from '../db/schema'
+import { user, comments, discounts } from '../db/schema'
 
 export type User = InferSelectModel<typeof user>
 export type Comments = InferSelectModel<typeof comments>
 export type Discounts = InferSelectModel<typeof discounts>
 
 export type Products = {
-    id: string;
+    id: number;
     title: string;
     description: string | null;
     price: number;
@@ -17,7 +17,7 @@ export type Products = {
 }
 
 export type Tickets = {
-    id: string;
+    id: number;
     title: string;
     message: string;
     reply: string | null;
@@ -26,6 +26,3 @@ export type Tickets = {
     createdAt: Date;
     updatedAt: Date;
 }
-
-
-

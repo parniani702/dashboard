@@ -87,7 +87,7 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center py-4 gap-2">
         {filterKey && (
           <Input
-            placeholder={`جستجو براساس موضوع`}
+            placeholder={`جستجو بر اساس کد تخفیف`}
             value={
               (table.getColumn(filterKey)?.getFilterValue() as string) ?? ""
             }

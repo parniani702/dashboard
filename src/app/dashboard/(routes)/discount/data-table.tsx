@@ -33,6 +33,7 @@ import {
 import { ChevronDown } from "lucide-react";
 import { toast } from "react-toastify";
 import { Skeleton } from "@/components/ui/skeleton";
+import CreateDiscountForm from "./_components/CreateDiscountForm";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -86,7 +87,7 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center py-4 gap-2">
         {filterKey && (
           <Input
-            placeholder={`جستجو براساس موضوع`}
+            placeholder={`جستجو براساس کد تخفیف`}
             value={
               (table.getColumn(filterKey)?.getFilterValue() as string) ?? ""
             }
@@ -129,6 +130,9 @@ export function DataTable<TData, TValue>({
         >
           خروجی json
         </Button>
+
+        {/* Create Discount */}
+        <CreateDiscountForm />
       </div>
 
       <div className="overflow-hidden rounded-md border">

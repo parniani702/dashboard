@@ -61,6 +61,7 @@ export const UpdateUserS = async (formdata: FormData) => {
 // delete user
 export const DeleteUserS = async (userId: string) => {
   try {
+  
     await db.delete(user).where(eq(user.id, userId));
     return {
       success: true,

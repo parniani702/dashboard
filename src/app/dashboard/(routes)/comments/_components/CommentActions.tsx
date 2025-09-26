@@ -24,6 +24,7 @@ import { useState } from "react";
 import UpdateProductForm from "./UpdateProductForm";
 import { DeleteComment } from "@/actions/comments-action";
 import { Comments } from "@/types";
+import { stringify } from "querystring";
 
 
 
@@ -39,7 +40,7 @@ const CommentActions = ({ comments }: { comments: Comments  }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(comments.id)}>
+        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(comments.id.toString())}>
           <Button variant="ghost" className="w-full">
             کپی کردن ایدی کامنت
             <Copy />

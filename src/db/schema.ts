@@ -75,7 +75,7 @@ export const verifications = pgTable("verification", {
 
 // ------------------ Product ------------------
 export const products = pgTable("product", {
-  id: varchar("id").primaryKey().default(randomUUID()),
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
   title: varchar("title").notNull(),
   description: text("description"),
   price: integer("price").notNull(),
@@ -87,7 +87,7 @@ export const products = pgTable("product", {
 
 // ------------------ Comment ------------------
 export const comments = pgTable("comment", {
-  id: varchar("id").primaryKey().default(randomUUID()),
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
   content: text("content").notNull(),
   userId: varchar("user_id").notNull(),
   productId: varchar("product_id").notNull(),
@@ -96,7 +96,7 @@ export const comments = pgTable("comment", {
 
 // ------------------ Ticket ------------------
 export const tickets = pgTable("ticket", {
-  id: varchar("id").primaryKey().default(randomUUID()),
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
   title: varchar("title").notNull(),
   message: text("message").notNull(),
   reply: text("reply"),
@@ -107,14 +107,15 @@ export const tickets = pgTable("ticket", {
 });
 
 // ------------------ Discount ------------------
+
 export const discounts = pgTable("discount", {
-  id: varchar("id").primaryKey().default(randomUUID()),
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
   code: varchar("code").notNull().unique(),
   precentage: integer("precentage").default(0).notNull(),
   usageLimit: integer("usage_limit"),
   usedCount: integer("used_count").default(0).notNull(),
-  validForm: timestamp("valid_form").defaultNow().notNull(),
-  validTo: timestamp("valid_to"),
+  validForm: varchar("valid_form").notNull(),
+  validTo: varchar("valid_to"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

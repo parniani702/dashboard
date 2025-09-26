@@ -5,7 +5,7 @@ import { db } from "../db";
 import { tickets } from "../db/schema";
 import { z } from 'zod'
 
-export const DeleteTicketS = async (ticketId: string) => {
+export const DeleteTicketS = async (ticketId: number) => {
     try {
         await db.delete(tickets).where(eq(tickets.id, ticketId))
         return {
@@ -46,7 +46,7 @@ export const AnswerTicketS = async (formdata: FormData) => {
         await db.update(tickets).set({
             reply: parsed.data.reply,
             status: 'close'
-        }).where(eq(tickets.id, parsed.data.id))
+        }).where(eq(tickets.id, Number(parsed.data.id)))
 
         return {
             success: true,

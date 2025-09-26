@@ -15,7 +15,7 @@ export const getProducts = async () => {
 export const UpdateProductS = async (formdata: FormData) => {
   try {
     const ProductSchema = z.object({
-      id: z.string().max(255),
+      id: z.number().max(255),
       title: z.string().min(1, "نام محصول نباید خالی باشه").max(60, "نام محصول خیلی بلند است"),
       description: z
         .string()
@@ -27,7 +27,7 @@ export const UpdateProductS = async (formdata: FormData) => {
     });
 
     const data = {
-      id: formdata.get("id"),
+      id: Number(formdata.get("id")),
       title: formdata.get("title"),
       description: formdata.get("description"),
       price: Number(formdata.get("price")),
@@ -67,7 +67,7 @@ export const UpdateProductS = async (formdata: FormData) => {
 };
 
 // delete product
-export const DeleteProductS = async (productId: string) => {
+export const DeleteProductS = async (productId: number) => {
   try {
     await db.delete(products).where(eq(products.id, productId));
     return {

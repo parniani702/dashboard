@@ -8,6 +8,7 @@ import { LoaderCircle, Save } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Products } from "@/types";
+import { Textarea } from "@/components/ui/textarea";
 
 
 const UpdateProductForm = ({ products }: { products: Products }) => {
@@ -42,7 +43,7 @@ const UpdateProductForm = ({ products }: { products: Products }) => {
         </div>
         <div className="space-y-2">
           <Label>توضیحات محصول</Label>
-          <Input name="description" placeholder="توضیحات محصول رو وارد کن" />
+          <Textarea name="description" placeholder="توضیحات محصول رو وارد کن" />
         </div>
         <div className="space-y-2">
           <Label>قیمت محصول به تومان</Label>

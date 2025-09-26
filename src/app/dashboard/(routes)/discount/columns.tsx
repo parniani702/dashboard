@@ -3,18 +3,21 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
-import UserActions from "./_components/UserActions";
 import { Discounts } from "@/types";
+import DiscountActions from "./_components/DiscountAction";
+import moment from "moment-jalaali";
+
+moment.loadPersian({ usePersianDigits: true });
 
 
 
 
 export const columns: ColumnDef<Discounts>[] = [
-  // users table for showing users list columns
+
   {
-    accessorKey: "precentage",
-    header: "درصد تخفیف",
-    cell: ({ row }) => <span className="capitalize">{row.getValue("precentage")}</span>,
+    accessorKey: "id",
+    header: "ایدی",
+    cell: ({ row }) => <span className="capitalize">{row.getValue("id")}</span>,
   },
   
   {
@@ -34,43 +37,45 @@ export const columns: ColumnDef<Discounts>[] = [
   },
 
   {
+    accessorKey: "precentage",
+    header: "٪ تخفیف",
+    cell: ({ row }) => (
+      <span className="capitalize bg-yellow-600 font-semibold px-1">{`${row.getValue("precentage")} %`}</span>
+    ),
+  },
+  {
     accessorKey: "usageLimit",
-    header: "محدودیت تعداد استفاده",
+    header: "تعداد دفعات",
     cell: ({ row }) => (
       <span className="capitalize">{row.getValue("usageLimit")}</span>
     ),
   },
-
-  {
-    accessorKey: "usedCount",
-    header: "تعداد استفاده شده",
-    cell: ({ row }) => (
-      <span className="capitalize">{row.getValue("usedCount")}</span>
-    ),
-  },
-
   {
     accessorKey: "validForm",
-    header: "از تاریخ",
-    cell: ({ row }) => (
-      <span className="capitalize">{row.getValue("validForm")}</span>
-    ),
+    header: "تاریخ شروع",
+    cell: ({ row }) => {
+      const date = row.getValue("validForm") as string;
+      const formatted = moment(date).format("jYYYY/jMM/jDD");
+      return <span>{formatted}</span>;
+    },
   },
   {
     accessorKey: "validTo",
-    header: "تا تاریخ",
-    cell: ({ row }) => (
-      <span className="capitalize">{row.getValue("validTo")}</span>
-    ),
+    header: "تاریخ انقضا",
+    cell: ({ row }) => {
+      const date = row.getValue("validTo") as string;
+      const formatted = moment(date).format("jYYYY/jMM/jDD");
+      return <span>{formatted}</span>;
+    },
   },
 
-  // user actions for edit delete
+
   {
     id: "action",
     header: "عملیات",
     cell: ({ row }) => {
       const discounts = row.original;
-      return <UserActions discounts={discounts} />;
+      return <DiscountActions discounts={discounts} />;
     },
   },
 ];

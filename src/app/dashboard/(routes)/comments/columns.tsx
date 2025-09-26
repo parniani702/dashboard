@@ -10,13 +10,13 @@ import { Comments } from "@/types";
 export const columns: ColumnDef<Comments>[] = [
   // users table for showing users list columns
   {
-    accessorKey: "ایدی",
+    accessorKey: "id",
     header: "ایدی",
     cell: ({ row }) => <span className="capitalize">{row.getValue("id")}</span>,
   },
   
   {
-    accessorKey: "کامنت",
+    accessorKey: "content",
     header: ({ column }) => (
       <Button
         variant="ghost"
@@ -33,7 +33,7 @@ export const columns: ColumnDef<Comments>[] = [
   },
 
   {
-    accessorKey: "ایدی کاربر",
+    accessorKey: "userId",
     header: "ایدی کاربر",
     cell: ({ row }) => (
       <span className="capitalize">{row.getValue("userId")}</span>
@@ -41,7 +41,7 @@ export const columns: ColumnDef<Comments>[] = [
   },
 
   {
-    accessorKey: "ایدی محصول",
+    accessorKey: "productId",
     header: "ایدی محصول",
     cell: ({ row }) => (
       <span className="capitalize">{row.getValue("productId")}</span>
@@ -50,7 +50,7 @@ export const columns: ColumnDef<Comments>[] = [
 
   // user actions for edit delete
   {
-    id: "عملیات",
+    id: "action",
     header: "عملیات",
     cell: ({ row }) => {
       const comments  = row.original;
