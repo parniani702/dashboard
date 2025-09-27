@@ -32,7 +32,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import { toast } from "react-toastify";
-import { Skeleton } from "@/components/ui/skeleton";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -52,15 +51,6 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-
-  const [showSkeleton, setShowSkeleton] = React.useState(true);
-
-  React.useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSkeleton(false);
-    }, 600);
-    return () => clearTimeout(timer);
-  }, []);
 
   const table = useReactTable({
     data,
@@ -113,7 +103,9 @@ export function DataTable<TData, TValue>({
                   checked={column.getIsVisible()}
                   onCheckedChange={(value) => column.toggleVisibility(!!value)}
                 >
-                  {typeof column.columnDef.header === 'string' ? column.columnDef.header : ''}
+                  {typeof column.columnDef.header === "string"
+                    ? column.columnDef.header
+                    : ""}
                 </DropdownMenuCheckboxItem>
               ))}
           </DropdownMenuContent>
@@ -149,14 +141,9 @@ export function DataTable<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
+
           <TableBody>
-            {showSkeleton ? (
-              <TableRow>
-                <TableCell colSpan={columns.length}>
-                  <Skeleton className="w-full h-24" />
-                </TableCell>
-              </TableRow>
-            ) : table.getRowModel().rows?.length ? (
+            {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -164,10 +151,7 @@ export function DataTable<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="text-right">
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
                 </TableRow>

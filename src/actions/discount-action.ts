@@ -11,7 +11,7 @@ export const CreateDiscountS = async (formdata: FormData) => {
       code: (formdata.get("code")),
       percentage: Number(formdata.get("percentage")),
       usageLimit: Number(formdata.get("usageLimit")),
-      validFrom: (formdata.get("fromDate")), // از hidden input میاد
+      validFrom: (formdata.get("fromDate")), 
       validTo: (formdata.get("toDate")),
     };
 

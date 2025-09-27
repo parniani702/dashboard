@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
-import UserActions from "./_components/UserActions";
+import UserActions from "./_components/TicketActions";
 import { Tickets } from "@/types";
 
 export const columns: ColumnDef<Tickets>[] = [

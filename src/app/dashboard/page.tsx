@@ -1,21 +1,22 @@
-import StatisticCard8 from "@/components/statistic-card-8";
-import { Card } from "@/components/ui/card";
+import CircelChart from "./_components/CircelChart";
+import InfoCards from "./_components/InfoCard";
+import LineChart from "./_components/LineChart";
+import TableList from "./_components/TableList";
+
 
 const DashboardPage = () => {
   return (
-    <div>
-      <StatisticCard8 />
-
-      {/* Middle large cards */}
-      <div className="flex flex-col xl:flex-row gap-3">
-        <Card className="w-full xl:w-1/3 h-64 border-slate-700" />
+    <div className="space-y-3">
+      {/* information Cards */}
+      <InfoCards />
+      {/* charts */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
+        <LineChart />
+        <CircelChart />
       </div>
-
-      {/* Bottom 4 larger cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-        {[...Array(4)].map((_, idx) => (
-          <Card key={idx} className="h-64 border-slate-700" />
-        ))}
+      {/* table lists */}
+      <div className="">
+        <TableList />
       </div>
     </div>
   );

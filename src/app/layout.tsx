@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { vazirMatn } from "next-persian-fonts/vazirmatn";
 import "./globals.css";
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "next-themes";
 import { ToastContainer } from "react-toastify";
 import { BookDashed } from "lucide-react";

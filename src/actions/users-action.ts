@@ -6,10 +6,6 @@ import { z } from "zod";
 import { user } from "../db/schema";
 import { db } from "../db";
 
-// get all user
-export const getuser = async () => {
-  return await db.select().from(user);
-};
 
 // update user
 export const UpdateUserS = async (formdata: FormData) => {

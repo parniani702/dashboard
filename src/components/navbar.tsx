@@ -1,7 +1,7 @@
 "use client";
 
 import { Bell, Gauge } from "lucide-react";
-import MobileSideBar from "./mobile-sidebar";
+import MobileSideBar from "./MobileSidebar";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";

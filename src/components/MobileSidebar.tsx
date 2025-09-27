@@ -4,7 +4,7 @@ import { Gauge } from "lucide-react";
 import { Drawer, DrawerTrigger, DrawerContent, DrawerClose } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import DashboardSideBar from "@/app/dashboard/_components/dashboard-sidebar";
+import DashboardSideBar from "@/app/dashboard/_components/DashboardSidebar";
 
 const MobileSideBar = () => {
   return (

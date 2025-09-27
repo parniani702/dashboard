@@ -26,7 +26,7 @@ import { DeleteTicketS } from "@/actions/tickets-action";
 import AnswerTicket from "./AnswerTicket";
 
 
-const UserActions = ({ tickets }: { tickets: Tickets  }) => {
+const TicketActions = ({ tickets }: { tickets: Tickets  }) => {
   const [isLoading, setIsLoading] = useState(false)
 
   return (
@@ -106,4 +106,4 @@ const UserActions = ({ tickets }: { tickets: Tickets  }) => {
   )
 }
 
-export default UserActions;
+export default TicketActions;
