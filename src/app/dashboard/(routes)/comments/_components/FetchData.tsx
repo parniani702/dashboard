@@ -7,32 +7,33 @@ import { useEffect, useState, useTransition } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const FetchData = () => {
-  const [commentData, setCommentData] = useState<Comments[]>([]);
-  const [isPending, startTransition] = useTransition()
+  const [commentData, setCommentData] = useState<Comments[] | null>(null); // 
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
-    startTransition(    async () => {
-      const res = await fetch("/api/comments");
-      const data: Comments[] = await res.json();
-      setCommentData(data);
-    })
+    startTransition(async () => {
+      try {
+        const res = await fetch("/api/comments");
+        const data: Comments[] = await res.json();
+        setCommentData(data);
+      } catch (err) {
+        console.error(err);
+        setCommentData([]);
+      }
+    });
   }, []);
 
-  const data: Comments[] = commentData.map((comment) => ({
-    id: comment.id,
-    content: comment.content,
-    userId: comment.userId,
-    productId: comment.productId,
-    createdAt: comment.createdAt,
-  }));
+  if (isPending && commentData === null) {
+    return <Skeleton className="w-full h-40" />;
+  }
+
+  if (commentData && commentData.length === 0) {
+    return <DataTable columns={columns} data={commentData} filterKey="content" />
+  }
 
   return (
     <div className="p-4">
-      {isPending ? (
-        <Skeleton className="w-full h-40" />
-      ) : (
-        <DataTable columns={columns} data={data} filterKey="email" />
-      )}
+      {commentData && <DataTable columns={columns} data={commentData} filterKey="content" />}
     </div>
   );
 };

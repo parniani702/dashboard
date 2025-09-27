@@ -1,97 +1,124 @@
-"use client"
+"use client";
 
-import { TrendingUp } from "lucide-react"
-import {
-  Label,
-  PolarGrid,
-  PolarRadiusAxis,
-  RadialBar,
-  RadialBarChart,
-} from "recharts"
-
+import { useEffect, useState } from "react";
+import { LabelList, Pie, PieChart } from "recharts";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
-} from "@/components/ui/card"
-import { ChartConfig, ChartContainer } from "@/components/ui/chart"
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import { Badge } from "@/components/ui/badge";
+import { TrendingUp } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
-export const description = "A radial chart with text"
-
-const chartData = [
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-]
+export const description = "نمودار دایره‌ای با تعداد کاربران، محصولات، تخفیف‌ها و نظرات";
 
 const chartConfig = {
-  visitors: {
-    label: "بازدید کننده",
-  },
-  safari: {
-    label: "Safari",
-    color: "var(--chart-2)",
-  },
-} satisfies ChartConfig
+  کاربران: { label: "کاربران", color: "var(--chart-1)" },
+  محصولات: { label: "محصولات", color: "var(--chart-2)" },
+  تخفیف‌ها: { label: "تخفیف‌ها", color: "var(--chart-3)" },
+  نظرات: { label: "نظرات", color: "var(--chart-4)" },
+} satisfies ChartConfig;
 
-export default function CircelChart() {
+export default function PieChartComponent() {
+  const [chartData, setChartData] = useState<
+    { category: string; value: number; fill: string }[]
+  >([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [usersRes, productsRes, discountsRes, commentsRes] = await Promise.all([
+          fetch("/api/users"),
+          fetch("/api/products"),
+          fetch("/api/discounts"),
+          fetch("/api/comments"),
+        ]);
+
+        const [users, products, discounts, comments] = await Promise.all([
+          usersRes.json(),
+          productsRes.json(),
+          discountsRes.json(),
+          commentsRes.json(),
+        ]);
+
+        setChartData([
+          { category: "کاربران", value: users.length, fill: chartConfig.کاربران.color },
+          { category: "محصولات", value: products.length, fill: chartConfig.محصولات.color },
+          { category: "تخفیف‌ها", value: discounts.length, fill: chartConfig.تخفیف‌ها.color },
+          { category: "نظرات", value: comments.length, fill: chartConfig.نظرات.color },
+        ]);
+      } catch (err) {
+        console.error("خطا در دریافت داده‌ها:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   return (
-    <Card className="flex flex-col mx-5 sm:mx-1">
+    <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
-        <span className="text-center">آمار بازدید صفحه اصلی</span>
+        <CardTitle>
+          {loading ? <Skeleton className="h-6 w-24" /> : "نمودار دایره‌ای"}
+          {!loading && (
+            <Badge
+              variant="outline"
+              className="text-green-500 bg-green-500/10 border-none ml-2"
+            >
+              <TrendingUp className="h-4 w-4" />
+              <span>5.2%</span>
+            </Badge>
+          )}
+        </CardTitle>
+        <CardDescription>ژانویه تا ژوئن 2024</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
-        >
-          <RadialBarChart
-            data={chartData}
-            startAngle={0}
-            endAngle={250}
-            innerRadius={80}
-            outerRadius={110}
+        {loading ? (
+          <div className="mx-auto aspect-square max-h-[250px] flex flex-col gap-2 justify-center items-center">
+            <Skeleton className="h-48 w-48 rounded-full" />
+            <Skeleton className="h-4 w-24 mt-2" />
+          </div>
+        ) : (
+          <ChartContainer
+            config={chartConfig}
+            className="[&_.recharts-text]:fill-background mx-auto aspect-square max-h-[250px]"
           >
-            <PolarGrid
-              gridType="circle"
-              radialLines={false}
-              stroke="none"
-              className="first:fill-muted last:fill-background"
-              polarRadius={[86, 74]}
-            />
-            <RadialBar dataKey="visitors" background cornerRadius={10} />
-            <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
-              <Label
-                content={({ viewBox }) => {
-                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                    return (
-                      <text
-                        x={viewBox.cx}
-                        y={viewBox.cy}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                      >
-                        <tspan
-                          x={viewBox.cx}
-                          y={viewBox.cy}
-                          className="fill-foreground text-4xl font-bold"
-                        >
-                          {chartData[0].visitors.toLocaleString()}
-                        </tspan>
-                        <tspan
-                          x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 24}
-                          className="fill-muted-foreground"
-                        >
-                          بازدید کنندگان
-                        </tspan>
-                      </text>
-                    )
-                  }
-                }}
+            <PieChart>
+              <ChartTooltip
+                content={<ChartTooltipContent nameKey="category" hideLabel={false} />}
               />
-            </PolarRadiusAxis>
-          </RadialBarChart>
-        </ChartContainer>
+              <Pie
+                data={chartData}
+                innerRadius={30}
+                dataKey="value"
+                radius={10}
+                cornerRadius={8}
+                paddingAngle={4}
+              >
+                <LabelList
+                  dataKey="value"
+                  stroke="none"
+                  fontSize={12}
+                  fontWeight={500}
+                  fill="currentColor"
+                />
+              </Pie>
+            </PieChart>
+          </ChartContainer>
+        )}
       </CardContent>
     </Card>
-  )
+  );
 }

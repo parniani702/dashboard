@@ -5,6 +5,7 @@ import { db } from "../db";
 import { tickets } from "../db/schema";
 import { z } from 'zod'
 
+// ? -----------------------------------------> DELETE TICKET
 export const DeleteTicketS = async (ticketId: number) => {
     try {
         await db.delete(tickets).where(eq(tickets.id, ticketId))
@@ -22,7 +23,7 @@ export const DeleteTicketS = async (ticketId: number) => {
     }
 }
 
-
+// ? -----------------------------------------> UPDATE TICKET - ANSWER
 export const AnswerTicketS = async (formdata: FormData) => {
     try {
         const answerSchema = z.object({

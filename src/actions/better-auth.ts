@@ -3,14 +3,15 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 
-// get session server
+
+// ? --------------------------------------> GET SESSION
 export const sessionS = async () => {
     return await auth.api.getSession({
         headers: await headers()
     })
 }
 
-//  register
+// ? -----------------------------------------> REGISTER
 export const RegisterS = async (formdata: FormData) => {
     try {
         const name = formdata.get("name")?.toString()
@@ -47,7 +48,7 @@ export const RegisterS = async (formdata: FormData) => {
     }
 }
 
-// login
+// ? -----------------------------------------> LOGIN
 export const LoginS = async (formdata: FormData) => {
     try {
         const email = formdata.get("email")?.toString()
@@ -80,7 +81,7 @@ export const LoginS = async (formdata: FormData) => {
     }
 }
 
-// update 
+// ? -----------------------------------------> CHANGE PASSWORD
 export const ChangePassword = async (formdata: FormData) => {
     const newPassword = formdata.get("newpassword")?.toString() 
     const currentPassword = formdata.get("oldpassword")?.toString() 
@@ -116,7 +117,7 @@ export const ChangePassword = async (formdata: FormData) => {
     }
 }
 
-// change name
+// ? -----------------------------------------> CHANGE NAME
 export const ChangeName = async (formdata: FormData) => {
     const name = formdata.get("name")?.toString()
 

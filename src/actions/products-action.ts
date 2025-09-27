@@ -7,7 +7,7 @@ import { products } from "../db/schema";
 import { db } from "../db";
 
 
-// update product
+// ? -----------------------------------------> UPDATE PRODUCT
 export const UpdateProductS = async (formdata: FormData) => {
   try {
     const ProductSchema = z.object({
@@ -62,7 +62,7 @@ export const UpdateProductS = async (formdata: FormData) => {
   }
 };
 
-// delete product
+// ? -----------------------------------------> DELETE PRODUCT
 export const DeleteProductS = async (productId: number) => {
   try {
     await db.delete(products).where(eq(products.id, productId));
@@ -78,7 +78,7 @@ export const DeleteProductS = async (productId: number) => {
   }
 };
 
-// create product
+// ? -----------------------------------------> CREATE PRODUCT
 export const CreateProductS = async (formdata: FormData) => {
   try {
     const ProductSchema = z.object({

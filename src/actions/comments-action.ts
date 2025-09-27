@@ -5,6 +5,7 @@ import { db } from "../db";
 import { comments } from "../db/schema";
 import { z } from 'zod'
 
+// ? -----------------------------------------> update comment
 export const UpdateComment = async (formdata: FormData) => {
     try {
         const dataSchema = z.object({
@@ -40,7 +41,7 @@ export const UpdateComment = async (formdata: FormData) => {
 }
 
 
-
+// ? -----------------------------------------> delete comment
 export const DeleteComment =  async (commentId: number) => {
     try {
 

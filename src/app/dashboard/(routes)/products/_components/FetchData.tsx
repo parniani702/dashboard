@@ -7,35 +7,33 @@ import { DataTable } from "../data-table";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const FetchData = () => {
-  const [productsData, setProductsData] = useState<Products[]>([]);
-  const [isPending, startTransition] = useTransition()
+  const [productsData, setProductsData] = useState<Products[] | null>(null);
+  const [isPending, startTransition] = useTransition();
+
   useEffect(() => {
     startTransition(async () => {
-      const res = await fetch("/api/products");
-      const data: Products[] = await res.json();
-      setProductsData(data); 
+      try {
+        const res = await fetch("/api/products");
+        const data: Products[] = await res.json();
+        setProductsData(data);
+      } catch (err) {
+        console.error(err);
+        setProductsData([]);
+      }
     });
   }, []);
-  
 
-  const data: Products[] = productsData.map((product) => ({
-    id: product.id,
-    title: product.title,
-    description: product.description,
-    price: product.price,
-    stock: product.stock,
-    sold: product.sold,
-    createdAt: product.createdAt,
-    updatedAt: product.updatedAt,
-  }));
+  if (isPending && productsData === null) {
+    return <Skeleton className="w-full h-40" />;
+  }
+
+  if (productsData && productsData.length === 0) {
+    return <DataTable columns={columns} data={productsData} filterKey="title" />
+  }
 
   return (
     <div className="p-4">
-      {isPending ? (
-        <Skeleton className="w-full h-40" />
-      ) : (
-        <DataTable columns={columns} data={data} filterKey="email" />
-      )}
+      {productsData && <DataTable columns={columns} data={productsData} filterKey="title" />}
     </div>
   );
 };

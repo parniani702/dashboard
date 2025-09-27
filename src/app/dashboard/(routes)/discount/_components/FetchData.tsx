@@ -7,35 +7,33 @@ import { DataTable } from "../data-table";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const FetchData = () => {
-  const [discountsData, setDiscountData] = useState<Discounts[]>([]);
+  const [discountsData, setDiscountsData] = useState<Discounts[] | null>(null);
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     startTransition(async () => {
-      const res = await fetch("/api/discounts");
-      const data: Discounts[] = await res.json();
-      setDiscountData(data);
+      try {
+        const res = await fetch("/api/discounts");
+        const data: Discounts[] = await res.json();
+        setDiscountsData(data);
+      } catch (err) {
+        console.error(err);
+        setDiscountsData([]);
+      }
     });
   }, []);
 
-  const data: Discounts[] = discountsData.map((discount) => ({
-    id: discount.id,
-    code: discount.code,
-    precentage: discount.precentage,
-    usageLimit: discount.usageLimit,
-    usedCount: discount.usedCount,
-    validForm: discount.validForm,
-    validTo: discount.validTo,
-    createdAt: discount.createdAt,
-  }));
+  if (isPending && discountsData === null) {
+    return <Skeleton className="w-full h-40" />;
+  }
+
+  if (discountsData && discountsData.length === 0) {
+      return <DataTable columns={columns} data={discountsData} filterKey="code" />
+  }
 
   return (
     <div className="p-4">
-      {isPending ? (
-        <Skeleton className="w-full h-40" />
-      ) : (
-        <DataTable columns={columns} data={data} filterKey="email" />
-      )}
+      {discountsData && <DataTable columns={columns} data={discountsData} filterKey="code" />}
     </div>
   );
 };

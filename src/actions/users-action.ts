@@ -7,7 +7,7 @@ import { user } from "../db/schema";
 import { db } from "../db";
 
 
-// update user
+// ? -----------------------------------------> UPDATE USER
 export const UpdateUserS = async (formdata: FormData) => {
   try {
     const userchema = z.object({
@@ -54,7 +54,7 @@ export const UpdateUserS = async (formdata: FormData) => {
   }
 };
 
-// delete user
+// ? -----------------------------------------> DELETE USER
 export const DeleteUserS = async (userId: string) => {
   try {
   

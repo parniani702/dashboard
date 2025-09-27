@@ -33,6 +33,7 @@
     "jalali-dayjs": "^0.0.1",
     "lucide-react": "^0.544.0",
     "moment-jalaali": "^0.10.4",
+    "motion": "^12.23.22",
     "next": "15.5.3",
     "next-persian-fonts": "^1.0.0",
     "next-themes": "^0.4.6",

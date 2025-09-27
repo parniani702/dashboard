@@ -1,6 +1,6 @@
 "use client";
 
-import { CreateDiscountS } from "@/actions/discount-action";
+import { CreateDiscountS, UpdateDiscountS } from "@/actions/discount-action";
 import { Button } from "@/components/ui/button";
 import Calendar from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
@@ -24,7 +24,7 @@ const UpdateDiscount = ({ discounts }: { discounts: Discounts }) => {
       <form
         className="flex flex-col mt-9 gap-4"
         action={async (formData) => {
-          const res = await CreateDiscountS(formData);
+          const res = await UpdateDiscountS(formData);
           if (res?.success) {
             toast.success(res.message);
             setIsLoading(false);
@@ -46,6 +46,7 @@ const UpdateDiscount = ({ discounts }: { discounts: Discounts }) => {
           name="toDate"
           value={dateRange?.to ? dateRange.to.toISOString() : ""}
         />
+        <input type="text" value={discounts.id} name="id" />
 
         <div className="space-y-3">
           <Label>کد تخفیف</Label>
