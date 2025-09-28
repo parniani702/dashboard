@@ -44,7 +44,6 @@ export default function LineChart() {
         <ChartContainer className="h-64 w-full" config={chartConfig}>
           <AreaChart data={mockPayments} margin={{ right: 0, left: 0 }}>
             <CartesianGrid vertical={false} strokeDasharray="3 3" />
-            <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />
             <Area
               dataKey="total"
               type="monotone"

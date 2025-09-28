@@ -12,8 +12,17 @@ export const columns: ColumnDef<User>[] = [
   // users table for showing users list columns
   {
     accessorKey: "id",
-    header: "ایدی",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        ایدی
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
     cell: ({ row }) => <span className="capitalize">{row.getValue("id")}</span>,
+    meta: {title: 'ایدی'},
   },
   
   {
@@ -30,6 +39,7 @@ export const columns: ColumnDef<User>[] = [
     cell: ({ row }) => (
       <span className="lowercase">{row.getValue("email")}</span>
     ),
+    meta: {title: 'ایمیل'},
   },
 
   {
@@ -38,6 +48,8 @@ export const columns: ColumnDef<User>[] = [
     cell: ({ row }) => (
       <span className="capitalize">{row.getValue("name")}</span>
     ),
+    meta: {title: 'نام نام خانودگی'},
+
   },
 
   {
@@ -46,6 +58,7 @@ export const columns: ColumnDef<User>[] = [
     cell: ({ row }) => (
       <span className="capitalize">{row.getValue("role")}</span>
     ),
+    meta: {title: 'نقش'},
   },
 
   // user actions for edit delete
@@ -56,5 +69,6 @@ export const columns: ColumnDef<User>[] = [
       const users = row.original;
       return <UserActions users={users} />;
     },
+    meta: {title: 'عملیات'},
   },
 ];

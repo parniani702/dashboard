@@ -77,12 +77,20 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center py-4 gap-2">
         {filterKey && (
           <Input
-            placeholder={`جستجو براساس موضوع`}
-            value={
-              (table.getColumn(filterKey)?.getFilterValue() as string) ?? ""
-            }
+            placeholder="جستجو با ایمیل"
+            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-              table.getColumn(filterKey)?.setFilterValue(event.target.value)
+              table.getColumn("email")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        )}
+        {filterKey && (
+          <Input
+            placeholder="جستجو با ایدی کاربر"
+            value={(table.getColumn("id")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("id")?.setFilterValue(event.target.value)
             }
             className="max-w-sm"
           />
@@ -104,9 +112,7 @@ export function DataTable<TData, TValue>({
                   checked={column.getIsVisible()}
                   onCheckedChange={(value) => column.toggleVisibility(!!value)}
                 >
-                  {typeof column.columnDef.header === "string"
-                    ? column.columnDef.header
-                    : ""}
+                  {(column.columnDef.meta as any)?.title ?? column.id}
                 </DropdownMenuCheckboxItem>
               ))}
           </DropdownMenuContent>
@@ -155,14 +161,20 @@ export function DataTable<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="text-right">
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
                   هیچ نتیجه‌ای یافت نشد.
                 </TableCell>
               </TableRow>

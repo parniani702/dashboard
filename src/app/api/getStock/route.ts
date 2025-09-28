@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 
-export function GET() {
-    const res = db.select().from(products).where(eq(products.stock, 0))
-    NextResponse.json(res)
+export async function GET() {
+    const res = await db.select().from(products).where(eq(products.stock, 0))
+    return NextResponse.json(res)
 }

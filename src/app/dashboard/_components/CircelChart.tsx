@@ -1,11 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { LabelList, Pie, PieChart } from "recharts";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -18,8 +16,16 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useQuery } from "@tanstack/react-query";
+import { User } from "better-auth";
+import { Comments, Discounts, Products } from "@/types";
+import { getComments } from "@/actions/comments-action";
+import { getDiscount } from "@/actions/discount-action";
+import { getProducts } from "@/actions/products-action";
+import { getUsers } from "@/actions/users-action";
 
-export const description = "نمودار دایره‌ای با تعداد کاربران، محصولات، تخفیف‌ها و نظرات";
+export const description =
+  "نمودار دایره‌ای با تعداد کاربران، محصولات، تخفیف‌ها و نظرات";
 
 const chartConfig = {
   کاربران: { label: "کاربران", color: "var(--chart-1)" },
@@ -29,43 +35,38 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function PieChartComponent() {
-  const [chartData, setChartData] = useState<
-    { category: string; value: number; fill: string }[]
-  >([]);
-  const [loading, setLoading] = useState(true);
+  const { data: users, isLoading: usersLoading } = useQuery<User[]>({
+    queryKey: ["getUsers"],
+    queryFn: getUsers
+  });
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
+  const { data: products, isLoading: productsLoading } = useQuery<Products[]>({
+    queryKey: ["getProducts"],
+    queryFn: getProducts,
+  });
 
-        const usersRes = await fetch("/api/users");
-        const users = await usersRes.json();
+  const { data: discounts, isLoading: discountsLoading } = useQuery<Discounts[]>({
+    queryKey: ["getDiscounts"],
+    queryFn: getDiscount,
+  });
 
-        const productsRes = await fetch("/api/products");
-        const products = await productsRes.json();
+  const { data: comments, isLoading: commentsLoading } = useQuery<Comments[]>({
+    queryKey: ["getComments"],
+    queryFn: getComments,
+  });
 
-        const discountsRes = await fetch("/api/discounts");
-        const discounts = await discountsRes.json();
+  const loading =
+    usersLoading || productsLoading || discountsLoading || commentsLoading;
 
-        const commentsRes = await fetch("/api/comments");
-        const comments = await commentsRes.json();
-
-
-        setChartData([
+  const chartData =
+    !loading && users && products && discounts && comments
+      ? [
           { category: "کاربران", value: users.length, fill: chartConfig.کاربران.color },
           { category: "محصولات", value: products.length, fill: chartConfig.محصولات.color },
           { category: "تخفیف‌ها", value: discounts.length, fill: chartConfig.تخفیف‌ها.color },
           { category: "نظرات", value: comments.length, fill: chartConfig.نظرات.color },
-        ]);
-      } catch (err) {
-        console.error("خطا در دریافت داده‌ها:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchData();
-  }, []);
+        ]
+      : [];
 
   return (
     <Card className="flex flex-col">
@@ -102,7 +103,6 @@ export default function PieChartComponent() {
                 data={chartData}
                 innerRadius={30}
                 dataKey="value"
-                radius={10}
                 cornerRadius={8}
                 paddingAngle={4}
               >

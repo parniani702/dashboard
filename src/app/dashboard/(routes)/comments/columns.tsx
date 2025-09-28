@@ -16,27 +16,27 @@ export const columns: ColumnDef<Comments>[] = [
   },
   
   {
-    accessorKey: "content",
+    accessorKey: "userId",
     header: ({ column }) => (
       <Button
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "desc")}
       >
-        کامنت
+        ایدی کاربر
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
     enableColumnFilter: true,
     cell: ({ row }) => (
-      <span className="lowercase">{row.getValue("content")}</span>
+      <span className="lowercase">{row.getValue("userId")}</span>
     ),
   },
 
   {
-    accessorKey: "userId",
-    header: "ایدی کاربر",
+    accessorKey: "content",
+    header: "محتوای کامنت",
     cell: ({ row }) => (
-      <span className="capitalize">{row.getValue("userId")}</span>
+      <span className="capitalize">{row.getValue("content")}</span>
     ),
   },
 
