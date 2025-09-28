@@ -41,4 +41,3 @@ BETTER_AUTH_SECRET="your-secret-key"
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 ```
 
-# dashboard
