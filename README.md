@@ -3,6 +3,10 @@
 A modern **admin dashboard** built with **Next.js 14, React, TailwindCSS, shadcn/ui**, and powered by **Better-Auth, Drizzle ORM, PostgreSQL** on the backend.  
 Includes **user management, products, discount codes, comments, tickets, and analytics** — built for real-world use.
 
+
+
+--- 
+<img width="1680" height="860" alt="Screen Shot 2025-09-28 at 11 24 25 AM" src="https://github.com/user-attachments/assets/8deb6a04-8033-4fe7-9d10-bf5cff5c7537" />
 ---
 
 ## 🚀 Tech Stack
