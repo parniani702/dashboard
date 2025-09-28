@@ -38,6 +38,6 @@ pnpm dev
 ```bash
 DATABASE_URL="postgresql://user:password@localhost:5432/mydb"
 BETTER_AUTH_SECRET="your-secret-key"
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
+BETTER_AUTH_URL=http://localhost:3000 # Base URL of your app
 ```
 
