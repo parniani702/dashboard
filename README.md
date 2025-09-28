@@ -6,8 +6,8 @@ Includes **user management, products, discount codes, comments, tickets, and ana
 ---
 
 ## 🚀 Tech Stack
-- **Frontend:** Next.js, React, TailwindCSS, shadcn/ui, Framer Motion  
-- **Backend:** Better-Auth, Drizzle ORM, PostgreSQL  
+- **Frontend:** Next.js, React, TailwindCSS, shadcn/ui 
+- **Backend:** Better-Auth, Drizzle ORM,
 - **Validation & UX:** Zod, React Toastify  
 
 ---
@@ -16,10 +16,14 @@ Includes **user management, products, discount codes, comments, tickets, and ana
 - 🔑 Secure authentication & authorization  
 - 👥 Manage users, products, discounts, comments, and tickets  
 - 📊 Dashboard with charts and analytics  
-- 🎨 Modern responsive UI + smooth animations  
 - 📢 Realtime error & success notifications  
 
 ---
+
+DATABASE_URL="postgresql://user:password@localhost:5432/mydb"
+BETTER_AUTH_SECRET="your-secret-key"
+NEXT_PUBLIC_APP_URL="http://localhost:3000"
+
 
 ## 🛠️ Setup
 ```bash
@@ -29,3 +33,4 @@ pnpm install
 cp .env.example .env
 pnpm drizzle:push
 pnpm dev
+
