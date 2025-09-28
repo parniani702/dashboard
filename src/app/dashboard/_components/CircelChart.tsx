@@ -82,7 +82,6 @@ export default function PieChartComponent() {
             </Badge>
           )}
         </CardTitle>
-        <CardDescription>ژانویه تا ژوئن 2024</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         {loading ? (
