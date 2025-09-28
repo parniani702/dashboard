@@ -34,3 +34,4 @@ cp .env.example .env
 pnpm drizzle:push
 pnpm dev
 
+# dashboard
