@@ -37,19 +37,19 @@ export default function PieChartComponent() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const [usersRes, productsRes, discountsRes, commentsRes] = await Promise.all([
-          fetch("/api/users"),
-          fetch("/api/products"),
-          fetch("/api/discounts"),
-          fetch("/api/comments"),
-        ]);
 
-        const [users, products, discounts, comments] = await Promise.all([
-          usersRes.json(),
-          productsRes.json(),
-          discountsRes.json(),
-          commentsRes.json(),
-        ]);
+        const usersRes = await fetch("/api/users");
+        const users = await usersRes.json();
+
+        const productsRes = await fetch("/api/products");
+        const products = await productsRes.json();
+
+        const discountsRes = await fetch("/api/discounts");
+        const discounts = await discountsRes.json();
+
+        const commentsRes = await fetch("/api/comments");
+        const comments = await commentsRes.json();
+
 
         setChartData([
           { category: "کاربران", value: users.length, fill: chartConfig.کاربران.color },
