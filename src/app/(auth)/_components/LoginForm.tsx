@@ -1,6 +1,5 @@
 "use client";
 
-
 import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -15,27 +14,30 @@ const RegisterForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-
-
   return (
     <div className="flex items-center justify-center overflow-auto h-[70vh] sm:h-[80vh]">
       <Card className="w-full max-w-md shadow-xl bg-base-100">
         <CardContent className="gap-6">
           <h1 className="text-3xl font-bold text-center">ورود به حساب</h1>
-          <span className="text-xs">رمز پسورد برای ورود : </span>
-          <span>admin@gmail.com</span>
-          <span>admin123</span>
-          <form className="flex flex-col gap-4" action={async (FormData) => {
-            const res = await LoginS(FormData)
-            if(res?.success) {
-              toast.success(res?.message)
-              setIsLoading(false)
-              router.push("/dashboard")
-            } else {
-              toast.error(res?.message)
-              setIsLoading(false)
-            }
-          }}>
+          <div className="flex flex-col">
+            <span className="text-xs">رمز پسورد برای ورود : </span>
+            <span>admin@gmail.com</span>
+            <span>admin123</span>
+          </div>
+          <form
+            className="flex flex-col gap-4"
+            action={async (FormData) => {
+              const res = await LoginS(FormData);
+              if (res?.success) {
+                toast.success(res?.message);
+                setIsLoading(false);
+                router.push("/dashboard/");
+              } else {
+                toast.error(res?.message);
+                setIsLoading(false);
+              }
+            }}
+          >
             <div className="flex flex-col gap-1">
               <Label htmlFor="email">ایمیل</Label>
               <Input
@@ -65,8 +67,12 @@ const RegisterForm = () => {
               </p>
             </div>
 
-            <Button type="submit" className="w-full mt-4">
-              {isLoading ? <LoaderCircle className="animate-spin w-5 h-5 mx-auto" /> : "ورود"}
+            <Button type="submit" onClick={() => setIsLoading(true)} className="w-full mt-4">
+              {isLoading ? (
+                <LoaderCircle className="animate-spin w-5 h-5 mx-auto" />
+              ) : (
+                "ورود"
+              )}
             </Button>
           </form>
         </CardContent>

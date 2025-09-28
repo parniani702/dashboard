@@ -15,11 +15,7 @@ import {
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -32,10 +28,26 @@ const DashboardSideBar = () => {
   const items = [
     { title: "صفحه اصلی", icon: <Home size={20} />, href: "/dashboard" },
     { title: "کاربران", icon: <Users size={20} />, href: "/dashboard/users" },
-    { title: "محصولات", icon: <ShoppingBag size={20} />, href: "/dashboard/products" },
-    { title: "کامنت ها", icon: <MessageSquare size={20} />, href: "/dashboard/comments" },
-    { title: "تیکت ها", icon: <Ticket size={20} />, href: "/dashboard/tickets" },
-    { title: "تخفیف ها", icon: <DiscAlbumIcon size={20} />, href: "/dashboard/discount" },
+    {
+      title: "محصولات",
+      icon: <ShoppingBag size={20} />,
+      href: "/dashboard/products",
+    },
+    {
+      title: "کامنت ها",
+      icon: <MessageSquare size={20} />,
+      href: "/dashboard/comments",
+    },
+    {
+      title: "تیکت ها",
+      icon: <Ticket size={20} />,
+      href: "/dashboard/tickets",
+    },
+    {
+      title: "تخفیف ها",
+      icon: <DiscAlbumIcon size={20} />,
+      href: "/dashboard/discount",
+    },
   ];
 
   return (
@@ -54,11 +66,13 @@ const DashboardSideBar = () => {
             <Skeleton className="h-9 w-9 rounded-full" />
           ) : (
             <Avatar>
-              <AvatarImage src={session?.user.image || "/profile.jpg"} alt="پروفایل" />
+              <AvatarImage
+                src={session?.user.image || "/profile.jpg"}
+                alt="پروفایل"
+              />
               <AvatarFallback>{session?.user.name?.[0]}</AvatarFallback>
             </Avatar>
           )}
-
         </div>
 
         <div className="flex items-center gap-2">
@@ -71,13 +85,21 @@ const DashboardSideBar = () => {
             onClick={async () =>
               await authClient.signOut({
                 fetchOptions: {
-                  onRequest: () =>{ toast.error("خروج انجام شد")},
-                  onSuccess: () => router.push("/login"),
+                  onRequest: () => {
+                    toast.error("خروج انجام شد");
+                  },
+                  onSuccess: () => {
+                    router.push("/login")
+                  }
                 },
               })
             }
           >
-            <LogOut size={15} strokeWidth={2.5} className="hover:text-red-500 transition" />
+            <LogOut
+              size={15}
+              strokeWidth={2.5}
+              className="hover:text-red-500 transition"
+            />
           </span>
         </div>
       </div>
