@@ -1,6 +1,6 @@
-# 🧑‍💻 Fullstack Admin Dashboard
+# 🧑‍💻 Admin Dashboard
 
-A modern **admin dashboard** built with **Next.js 14, React, TailwindCSS, shadcn/ui**, and powered by **Better-Auth, Drizzle ORM, PostgreSQL** on the backend.  
+A modern **admin dashboard** built with **Next.js 15, TailwindCSS, shadcn/ui**, and powered by **Better-Auth, Drizzle ORM,  on the backend.  
 Includes **user management, products, discount codes, comments, tickets, and analytics** — built for real-world use.
 
 
