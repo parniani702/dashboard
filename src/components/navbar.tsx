@@ -8,9 +8,19 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ModeToggle } from "./ModeToggle";
+import { useQuery } from "@tanstack/react-query";
+
 
 const Navbar = () => {
-  const { data: session, isPending } = authClient.useSession();
+
+
+  const {data: session, isPending} = useQuery({
+    queryKey: ['getSession'],
+    queryFn: async () => {
+      const session = await authClient.getSession()
+      return session.data
+    }
+  })
 
   return (
     <div className="container mx-auto my-6">

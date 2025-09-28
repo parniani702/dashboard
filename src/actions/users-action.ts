@@ -6,6 +6,12 @@ import { z } from "zod";
 import { user } from "../db/schema";
 import { db } from "../db";
 
+// ? ===========================> GET USERS
+export const getUsers = async () => {
+  const data = await db.select().from(user)
+  return JSON.parse(JSON.stringify(data))
+}
+
 
 // ? -----------------------------------------> UPDATE USER
 export const UpdateUserS = async (formdata: FormData) => {

@@ -5,6 +5,12 @@ import { discounts } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 
+// ? =============================> GET DISCOUNTS
+export const getDiscount = async () => {
+  const data = await db.select().from(discounts)
+  return JSON.parse(JSON.stringify(data))
+}
+
 // ? -----------------------------------------> create discount
 export const CreateDiscountS = async (formdata: FormData) => {
   try {

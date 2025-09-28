@@ -1,33 +1,28 @@
 "use client";
 
-import { Discounts } from "@/types";
-import { useEffect, useState, useTransition } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { columns } from "../columns";
 import { DataTable } from "../data-table";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getDiscount } from "@/actions/discount-action";
 
 const FetchData = () => {
-  const [discountsData, setDiscountsData] = useState<Discounts[] | null>(null);
-  const [isPending, startTransition] = useTransition();
 
-  useEffect(() => {
-    startTransition(async () => {
-      try {
-        const res = await fetch("/api/discounts");
-        const data: Discounts[] = await res.json();
-        setDiscountsData(data);
-      } catch (err) {
-        console.error(err);
-        setDiscountsData([]);
-      }
-    });
-  }, []);
+  const {data: discountsData, isPending, error} = useQuery({
+    queryKey: ['getDiscount'],
+    queryFn: getDiscount,
+  })
 
-  if (isPending && discountsData === null) {
+
+  if (isPending) {
     return <Skeleton className="w-full h-40" />;
   }
 
-  if (discountsData && discountsData.length === 0) {
+  if (error) {
+    return <span>{error.message}</span>
+  }
+
+  if (discountsData.length === 0) {
       return <DataTable columns={columns} data={discountsData} filterKey="code" />
   }
 

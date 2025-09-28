@@ -5,6 +5,12 @@ import { db } from "../db";
 import { comments } from "../db/schema";
 import { z } from 'zod'
 
+// ? ===========================> GET COMMENTS
+export const getComments = async () => {
+    const data = await db.select().from(comments)
+    return JSON.parse(JSON.stringify(data))
+}
+
 // ? -----------------------------------------> update comment
 export const UpdateComment = async (formdata: FormData) => {
     try {

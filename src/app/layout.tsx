@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "next-themes";
 import { ToastContainer } from "react-toastify";
 import { BookDashed } from "lucide-react";
+import Provider from "@/components/Provider";
 
 export const metadata: Metadata = {
   title: "داشبورد",
@@ -25,9 +26,18 @@ export default function RootLayout({
     >
       <html lang="fa" dir="rtl">
         <body className={`${vazirMatn.className} antialiased`}>
-          <ToastContainer limit={3} closeOnClick={true} icon={<></>} toastClassName={`${vazirMatn.className} font-bold`} theme="colored" rtl={true} />
-          <Navbar />
-          {children}
+          <Provider>
+            <ToastContainer
+              limit={3}
+              closeOnClick={true}
+              icon={<></>}
+              toastClassName={`${vazirMatn.className} font-bold`}
+              theme="colored"
+              rtl={true}
+            />
+            <Navbar />
+            {children}
+          </Provider>
         </body>
       </html>
     </ThemeProvider>

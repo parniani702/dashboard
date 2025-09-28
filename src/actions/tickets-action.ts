@@ -5,6 +5,12 @@ import { db } from "../db";
 import { tickets } from "../db/schema";
 import { z } from 'zod'
 
+// ? ================================> GET TICKETS
+export const getTickets = async () => {
+    const data = await db.select().from(tickets)
+    return JSON.parse(JSON.stringify(data))
+}
+
 // ? -----------------------------------------> DELETE TICKET
 export const DeleteTicketS = async (ticketId: number) => {
     try {

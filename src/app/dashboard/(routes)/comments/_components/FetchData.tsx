@@ -1,39 +1,34 @@
 "use client";
 
-import { Comments } from "@/types";
+import { useQuery } from "@tanstack/react-query";
 import { columns } from "../columns";
 import { DataTable } from "../data-table";
-import { useEffect, useState, useTransition } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getComments } from "@/actions/comments-action";
 
 const FetchData = () => {
-  const [commentData, setCommentData] = useState<Comments[] | null>(null); // 
-  const [isPending, startTransition] = useTransition();
 
-  useEffect(() => {
-    startTransition(async () => {
-      try {
-        const res = await fetch("/api/comments");
-        const data: Comments[] = await res.json();
-        setCommentData(data);
-      } catch (err) {
-        console.error(err);
-        setCommentData([]);
-      }
-    });
-  }, []);
+  const {data: commentData, isPending, error} = useQuery({
+    queryKey: [''],
+    queryFn: getComments,
+  })
 
-  if (isPending && commentData === null) {
+
+  if (isPending) {
     return <Skeleton className="w-full h-40" />;
   }
 
-  if (commentData && commentData.length === 0) {
+  if (error) {
+    return <span>{error.message}</span>
+  }
+
+  if (commentData.length === 0) {
     return <DataTable columns={columns} data={commentData} filterKey="content" />
   }
 
   return (
     <div className="p-4">
-      {commentData && <DataTable columns={columns} data={commentData} filterKey="content" />}
+      <DataTable columns={columns} data={commentData} filterKey="content" />
     </div>
   );
 };

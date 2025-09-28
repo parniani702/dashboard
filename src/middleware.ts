@@ -3,13 +3,12 @@ import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 
 export async function middleware(request: NextRequest) {
-    
     const session = await auth.api.getSession({
         headers: await headers()
     })
 
     if(!session) {
-        return NextResponse.redirect(new URL("/login", request.url));
+        return NextResponse.redirect(new URL("/sign-in", request.url));
     }
 
     return NextResponse.next();
@@ -17,5 +16,5 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   runtime: "nodejs",
-  matcher: ["/dashboard/:path*"], // 
+  matcher: ["/dashboard/:path*", "/api/:path*"], // Apply middleware to specific routes
 };

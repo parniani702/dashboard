@@ -19,9 +19,16 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useQuery } from "@tanstack/react-query";
 
 const DashboardSideBar = () => {
-  const { data: session, isPending } = authClient.useSession();
+  const {data: session, isPending} = useQuery({
+    queryKey: ['getSession'],
+    queryFn: async () => {
+      const session = await authClient.getSession()
+      return session.data
+    }
+  })
   const pathName = usePathname();
   const router = useRouter();
 
@@ -70,7 +77,7 @@ const DashboardSideBar = () => {
                 src={session?.user.image || "/profile.jpg"}
                 alt="پروفایل"
               />
-              <AvatarFallback>{session?.user.name?.[0]}</AvatarFallback>
+              <AvatarFallback>{session?.user.name}</AvatarFallback>
             </Avatar>
           )}
         </div>

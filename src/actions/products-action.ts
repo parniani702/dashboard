@@ -6,7 +6,11 @@ import { z } from "zod";
 import { products } from "../db/schema";
 import { db } from "../db";
 
-
+// ? ================================> GET PRODUCTS
+export const getProducts = async () => {
+  const data = await db.select().from(products)
+  return JSON.parse(JSON.stringify(data))
+}
 // ? -----------------------------------------> UPDATE PRODUCT
 export const UpdateProductS = async (formdata: FormData) => {
   try {
@@ -61,7 +65,6 @@ export const UpdateProductS = async (formdata: FormData) => {
     };
   }
 };
-
 // ? -----------------------------------------> DELETE PRODUCT
 export const DeleteProductS = async (productId: number) => {
   try {
@@ -77,7 +80,6 @@ export const DeleteProductS = async (productId: number) => {
     };
   }
 };
-
 // ? -----------------------------------------> CREATE PRODUCT
 export const CreateProductS = async (formdata: FormData) => {
   try {
@@ -125,3 +127,4 @@ export const CreateProductS = async (formdata: FormData) => {
     };
   }
 };
+
