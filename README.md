@@ -6,7 +6,8 @@ Includes **user management, products, discount codes, comments, tickets, and ana
 
 
 --- 
-<img width="1680" height="860" alt="Screen Shot 2025-09-28 at 11 24 25 AM" src="https://github.com/user-attachments/assets/8deb6a04-8033-4fe7-9d10-bf5cff5c7537" />
+<img width="1677" height="862" alt="Screen Shot 2025-09-29 at 1 53 05 AM" src="https://github.com/user-attachments/assets/3853ac61-6445-4917-97b1-aa99ed2a8207" />
+
 
 ---
 
