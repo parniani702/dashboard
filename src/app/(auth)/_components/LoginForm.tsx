@@ -22,6 +22,9 @@ const RegisterForm = () => {
       <Card className="w-full max-w-md shadow-xl bg-base-100">
         <CardContent className="gap-6">
           <h1 className="text-3xl font-bold text-center">ورود به حساب</h1>
+          <span className="text-xs">رمز پسورد برای ورود : </span>
+          <span>admin@gmail.com</span>
+          <span>admin123</span>
           <form className="flex flex-col gap-4" action={async (FormData) => {
             const res = await LoginS(FormData)
             if(res?.success) {

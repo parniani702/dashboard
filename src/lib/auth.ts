@@ -23,9 +23,6 @@ export const auth = betterAuth({
     advanced: {
         useSecureCookies: true,
     },
-    trustedOrigins: [
-        'https://dashboard-rosy-phi-49.vercel.app',
-    ],
     plugins: [
         nextCookies(),
         admin({defaultRole: 'user'})
